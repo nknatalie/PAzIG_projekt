@@ -4,7 +4,7 @@ from PIL import *
 # set colours
 bg_colour = 'white' #"#3d6466"
 
-
+# the first frame 
 def load_frame1():
 	page1_open.tkraise()
 	page1_open.rowconfigure(0,weight=1)
