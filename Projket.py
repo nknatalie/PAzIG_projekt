@@ -9,9 +9,11 @@ def load_frame1():
 	page1_open.tkraise()
 	page1_open.rowconfigure(0,weight=1)
 	page1_open.columnconfigure(0,weight=1)
-	wybierz_gre= Button(page1_open, text="cos")
+	wybierz_gre= Button(page1_open, text="cos",command=load_frame2)
 	wybierz_gre.grid(row=0, column=0)
 
+def load_frame2():
+	page2_.tkraise()
 
 # initiallize app with basic settings
 root = Tk()
