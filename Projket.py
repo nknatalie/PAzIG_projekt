@@ -16,10 +16,8 @@ def load_frame1():
 # initiallize app with basic settings
 root = Tk()
 root.title("Recipe Picker")
-#root.eval("tk::PlaceWindow . center")
-x = root.winfo_screenwidth() // 2
-y = int(root.winfo_screenheight() * 0.1)
-root.geometry('500x600+' + str(x) + '+' + str(y))
+w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+root.geometry("%dx%d+0+0" % (w, h))
 root.resizable(1,1)
 root.option_add('*Font', 'Arial 12')
 root.rowconfigure(0, weight=1)
