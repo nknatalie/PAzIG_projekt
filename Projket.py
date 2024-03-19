@@ -1,7 +1,6 @@
 from tkinter import *
 from PIL import *
-from tkinter import ttk
-
+from customtkinter import *
 # set colours
 bg_colour = 'navy' #"#3d6466"
 
@@ -17,7 +16,7 @@ def load_frame1():
 	info_wr.grid(row=2,column=2,columnspan=2,ipadx=100, ipady=20)
 	style = {"fg": "white", "bg": bg_colour, "font": ("Arial", 20), "bd": 2, "relief": "raised"}
 
-	wybor_cr= Button(page1_start, text="Czas reakcji",command=load_frame2,**style) # czy chcemy zaokrąglone rogi?
+	wybor_cr= CTkButton(page1_start, text="Czas reakcji",command=load_frame2,**style, corner_radius=32) # czy chcemy zaokrąglone rogi?
 	wybor_cr.grid(row=3, column=1,columnspan=2,ipadx=170, ipady=40)
 	wybor_tr=Button(page1_start,text="Trening pamięci",command=load_frame3,**style)
 	wybor_tr.grid(row=3,column=3,columnspan=2,ipadx=170, ipady=40)
@@ -34,7 +33,7 @@ def load_frame3():
 	page3_.tkraise()
 	
 # initiallize app with basic settings
-root = Tk()
+root = CTk()
 root.title("Ćwiczenia")
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.geometry("%dx%d+0+0" % (w, h))
