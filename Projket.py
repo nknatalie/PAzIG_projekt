@@ -10,7 +10,7 @@ def load_frame1():
 	page1_start.rowconfigure((0,1,2,3,4),weight=1)
 	page1_start.columnconfigure((0,1,2,3,4),weight=1)
 	wybor_cs= Button(page1_start, text="Czas reakcji",command=load_frame2)
-	wybor_cs.grid(row=1, column=1,padx=40,pady=(0,40), sticky='ew')
+	wybor_cs.grid(row=1, column=1,padx=40,pady=(0,60), sticky='ew')
 
 def load_frame2():
 	page2_.tkraise()
@@ -28,7 +28,7 @@ root.tk_setPalette(background='white')
 
 
 # create a frame widgets
-page1_start = Frame(root, width=500, height=600, bg=bg_colour)
+page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
 page2_ = Frame(root, bg=bg_colour)
 
 # place frame widgets in window
