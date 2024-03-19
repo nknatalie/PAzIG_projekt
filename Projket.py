@@ -24,7 +24,6 @@ root.resizable(0,0)
 root.option_add('*Font', 'Arial 12')
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
-root.tk_setPalette(background='white')
 
 
 # create a frame widgets
