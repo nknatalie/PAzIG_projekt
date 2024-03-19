@@ -2,7 +2,7 @@ from tkinter import *
 from PIL import *
 
 # set colours
-bg_colour = 'white' #"#3d6466"
+bg_colour = 'navy' #"#3d6466"
 
 # the first frame 
 def load_frame1():
@@ -17,10 +17,10 @@ def load_frame2():
 
 # initiallize app with basic settings
 root = Tk()
-root.title("Recipe Picker")
+root.title("Ćwiczenia")
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.geometry("%dx%d+0+0" % (w, h))
-root.resizable(1,1)
+root.resizable(0,0)
 root.option_add('*Font', 'Arial 12')
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
