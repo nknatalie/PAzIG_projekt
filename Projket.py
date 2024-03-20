@@ -6,26 +6,38 @@ bg_colour = '#3652AD'
 # the first frame 
 def load_frame1():
 	page1_start.tkraise()
-	ramka=CTkFrame(page1_start, corner_radius=10,fg_color='#FFEAA7')
-	ramka.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
+	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#FFEAA7')
+	ramka_start.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	info_wr= CTkLabel(ramka,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75)
-	info_wr.place(relx=0.5,rely=0.05,anchor='n')
-	wybor_cr= CTkButton(ramka, text="Czas reakcji",  command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100) 
-	wybor_cr.place(relx=0.15,rely=0.35,anchor='w')
+	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75)
+	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
+	wybor_CzasReakcji= CTkButton(ramka_start, text="Czas reakcji",  command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100) 
+	wybor_CzasReakcji.place(relx=0.15,rely=0.35,anchor='w')
 
-	wybor_tr=CTkButton(ramka,text="Trening pamięci",command=load_frame3,font=('Arial',30),corner_radius=32,width=300, height=100)
-	wybor_tr.place(relx=0.65, rely=0.35, anchor='w')
+	wybor_TreningPamieci=CTkButton(ramka_start,text="Trening pamięci",command=load_frame2,font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_TreningPamieci.place(relx=0.65, rely=0.35, anchor='w')
 
-	wybor_ka= CTkButton(ramka, text="Kolejność matematyczna",command=load_frame4, font=('Arial',30),corner_radius=32,width=300, height=100)
-	wybor_ka.place(relx=0.25, rely=0.755, anchor='s')
+	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_KolejnoscMatematyczna.place(relx=0.25, rely=0.755, anchor='s')
 
-	wybor_rm= CTkButton(ramka, text="Równanie matemtyczne",command=load_frame5, font=('Arial',30),corner_radius=32,width=300, height=100)
-	wybor_rm.place(relx=0.85, rely=0.70, anchor='e')
+	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matemtyczne",command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_RownanieMatematyczne.place(relx=0.85, rely=0.70, anchor='e')
 
 
 def load_frame2():
-	page2_.tkraise()
+	page2_trudnosc.tkraise()
+	info_wyborpoziomu=CTkLabel(page2_trudnosc,text='Wybierz poziom trudności',fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75 )
+	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
+	radio_var_latwy=IntVar()
+	radio_var_sredni=IntVar()
+	radio_var_trudny=IntVar()
+	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',40,'bold'),value=1,variable=radio_var_latwy)
+	rb_latwy.place(relx=0.15, rely=0.60,anchor='w')
+	rb_sredni=CTkRadioButton(page2_trudnosc, text="Średni", font=('Arial',40,'bold'),value=2, variable=radio_var_sredni)
+	rb_sredni.place(relx=0.45, rely=0.60,anchor='w')
+	rb_trudny=CTkRadioButton(page2_trudnosc, text="Trudny", font=('Arial',40,'bold'),value=3,variable=radio_var_trudny)
+	rb_trudny.place(relx=0.80, rely=0.60,anchor='w')
+
 
 def load_frame3():
 	page3_.tkraise()
@@ -49,13 +61,13 @@ root.columnconfigure(0, weight=1)
 
 # create a frame widgets
 page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
-page2_ = Frame(root, bg=bg_colour)
+page2_trudnosc = Frame(root, bg=bg_colour)
 page3_ = Frame(root, bg=bg_colour)
 page4_ = Frame(root, bg=bg_colour)
 page5_ = Frame(root, bg=bg_colour)
 
 # place frame widgets in window
-for frame in (page1_start, page2_,page3_,page4_,page5_):
+for frame in (page1_start, page2_trudnosc,page3_,page4_,page5_):
 	frame.grid(row=0, column=0, sticky="nesw")
 
 # load the first frame
