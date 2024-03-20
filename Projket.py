@@ -11,22 +11,53 @@ def load_frame1():
 
 	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75)
 	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
-	wybor_CzasReakcji= CTkButton(ramka_start, text="Czas reakcji",  command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100) 
+
+	wybor_CzasReakcji= CTkButton(ramka_start, text="Czas reakcji",  command=lambda: load_frame2("czasu reakcji"), font=('Arial',30),corner_radius=32,width=300, height=100) 
 	wybor_CzasReakcji.place(relx=0.15,rely=0.35,anchor='w')
 
-	wybor_TreningPamieci=CTkButton(ramka_start,text="Trening pamięci",command=load_frame2,font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_TreningPamieci=CTkButton(ramka_start,text="Trening pamięci",command= lambda: load_frame2("treningu pamięci"),font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_TreningPamieci.place(relx=0.65, rely=0.35, anchor='w')
 
-	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=lambda:load_frame2("kolejności alfabetycznej"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_KolejnoscMatematyczna.place(relx=0.25, rely=0.755, anchor='s')
 
-	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matemtyczne",command=load_frame2, font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne",command=lambda:load_frame2("równania matematycznego"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_RownanieMatematyczne.place(relx=0.85, rely=0.70, anchor='e')
 
 
-def load_frame2():
+def load_frame2(cwiczenie):
+	def dalej():
+		poziom_trudnosci=radio_var_poziom.get()	
+		if cwiczenie == "czasu reakcji":
+			if poziom_trudnosci==1:
+				load_frame3()
+			elif poziom_trudnosci==2:
+				pass
+			elif poziom_trudnosci==3:
+				pass
+		elif cwiczenie == "treningu pamięci":
+			if poziom_trudnosci==1:
+				load_frame4()
+			elif poziom_trudnosci==2:
+				pass
+			elif poziom_trudnosci==3:
+				pass
+		elif cwiczenie == "kolejności alfabetycznej":
+			if poziom_trudnosci==1:
+				load_frame5()
+			elif poziom_trudnosci==2:
+				pass
+			elif poziom_trudnosci==3:
+				pass
+		elif cwiczenie == "równania matematycznego":
+			if poziom_trudnosci==1:
+				load_frame6()
+			elif poziom_trudnosci==2:
+				pass
+			elif poziom_trudnosci==3:
+				pass	
 	page2_trudnosc.tkraise()
-	info_wyborpoziomu=CTkLabel(page2_trudnosc,text='Wybierz poziom trudności',fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75 )
+	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	radio_var_poziom=IntVar()
 	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',40,'bold'),value=1,variable=radio_var_poziom)
@@ -36,16 +67,22 @@ def load_frame2():
 	rb_trudny=CTkRadioButton(page2_trudnosc, text="Trudny", font=('Arial',40,'bold'),value=3,variable=radio_var_poziom)
 	rb_trudny.place(relx=0.80, rely=0.60,anchor='w')
 
+	zatwierdzenie_trudnosci=CTkButton(page2_trudnosc,text='Dalej',font=('Arial',40),corner_radius=32,width=250, height=75, command= dalej)
+	zatwierdzenie_trudnosci.place(relx=0.5,rely=0.80,anchor='n')
+
 
 def load_frame3():
-	page3_.tkraise()
+	page3_CzasReakcji.tkraise()
 
 def load_frame4():
-	page4_.tkraise()
+	page4_TreningPamieci.tkraise()
 
 def load_frame5():
-	page5_.tkraise()
-	
+	page5_KolejnoscAlfabetyczna.tkraise()
+
+def load_frame6():
+	page6_RownaniaMatematyczne.tkraise()
+
 # initiallize app with basic settings
 root = CTk()
 root.title("Ćwiczenia")
@@ -60,12 +97,13 @@ root.columnconfigure(0, weight=1)
 # create a frame widgets
 page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
 page2_trudnosc = Frame(root, bg=bg_colour)
-page3_ = Frame(root, bg=bg_colour)
-page4_ = Frame(root, bg=bg_colour)
-page5_ = Frame(root, bg=bg_colour)
+page3_CzasReakcji = Frame(root, bg=bg_colour)
+page4_TreningPamieci = Frame(root, bg=bg_colour)
+page5_KolejnoscAlfabetyczna= Frame(root, bg=bg_colour)
+page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
 
 # place frame widgets in window
-for frame in (page1_start, page2_trudnosc,page3_,page4_,page5_):
+for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne):
 	frame.grid(row=0, column=0, sticky="nesw")
 
 # load the first frame
