@@ -28,14 +28,12 @@ def load_frame2():
 	page2_trudnosc.tkraise()
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text='Wybierz poziom trudności',fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
-	radio_var_latwy=IntVar()
-	radio_var_sredni=IntVar()
-	radio_var_trudny=IntVar()
-	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',40,'bold'),value=1,variable=radio_var_latwy)
+	radio_var_poziom=IntVar()
+	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',40,'bold'),value=1,variable=radio_var_poziom)
 	rb_latwy.place(relx=0.15, rely=0.60,anchor='w')
-	rb_sredni=CTkRadioButton(page2_trudnosc, text="Średni", font=('Arial',40,'bold'),value=2, variable=radio_var_sredni)
+	rb_sredni=CTkRadioButton(page2_trudnosc, text="Średni", font=('Arial',40,'bold'),value=2, variable=radio_var_poziom)
 	rb_sredni.place(relx=0.45, rely=0.60,anchor='w')
-	rb_trudny=CTkRadioButton(page2_trudnosc, text="Trudny", font=('Arial',40,'bold'),value=3,variable=radio_var_trudny)
+	rb_trudny=CTkRadioButton(page2_trudnosc, text="Trudny", font=('Arial',40,'bold'),value=3,variable=radio_var_poziom)
 	rb_trudny.place(relx=0.80, rely=0.60,anchor='w')
 
 
