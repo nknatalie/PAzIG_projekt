@@ -1,6 +1,8 @@
 from tkinter import *
 from PIL import *
 from customtkinter import *
+import random
+
 # set colours
 bg_colour = '#3652AD'
 # the first frame 
@@ -9,7 +11,7 @@ def load_frame1():
 	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#FFEAA7')
 	ramka_start.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75)
+	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
 
 	wybor_CzasReakcji= CTkButton(ramka_start, text="Czas reakcji",  command=lambda: load_frame2("czasu reakcji"), font=('Arial',30),corner_radius=32,width=300, height=100) 
@@ -41,7 +43,7 @@ def load_frame2(cwiczenie):
 			komunikat_brak_wyboru.place(relx=0.5,rely=0.15, anchor='n')
 
 	page2_trudnosc.tkraise()
-	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',50),corner_radius=32,width=250, height=75 )
+	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	radio_var_poziom=IntVar()
 	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',45,'bold'),value=1,variable=radio_var_poziom)
@@ -60,7 +62,7 @@ def load_frame2(cwiczenie):
 
 def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
-	info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',50,'bold'),corner_radius=32,width=250, height=75 )
+	info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_zapamietajObiekt.place(relx=0.5,rely=0.05,anchor='n')
 	if poziom_trudnosci==1:
 		pass
@@ -71,7 +73,7 @@ def load_frame3(poziom_trudnosci):
 
 def load_frame4(poziom_trudnosci):
 	page4_TreningPamieci.tkraise()
-	info_zapamietajKolejnosc=CTkLabel(page4_TreningPamieci,text='Zapamiętaj kolejność!',fg_color='white', font=('Arial',50,'bold'),corner_radius=32,width=250, height=75 )
+	info_zapamietajKolejnosc=CTkLabel(page4_TreningPamieci,text='Zapamiętaj kolejność!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 ) 
 	info_zapamietajKolejnosc.place(relx=0.5,rely=0.05,anchor='n')
 	if poziom_trudnosci==1:
 		pass
@@ -91,14 +93,30 @@ def load_frame5(poziom_trudnosci):
 
 def load_frame6(poziom_trudnosci):
 	page6_RownaniaMatematyczne.tkraise()
-	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',50,'bold'),corner_radius=32,width=250, height=75 )
+	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')	
 	if poziom_trudnosci==1:
-		pass
+		liczby =[random.randint(1,10) for _ in range(3)]
+		operatory=[random.choice(["+","-"]) for _ in range(2)]
 	elif poziom_trudnosci==2:
-		pass
+		liczby =[random.randint(1,10) for _ in range(3)]
+		operatory=[random.choice(["+","-","*"]) for _ in range(2)]
 	elif poziom_trudnosci==3:
-		pass
+		liczby =[random.randint(1,10) for _ in range(3)]
+		operatory=[random.choice(["+","-","*","/"]) for _ in range(2)]
+
+	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
+	wynik=eval(rownanie)
+
+	info_rownanie=CTkLabel(page6_RownaniaMatematyczne,text=rownanie,fg_color='white',font=('Arial',55),corner_radius=10)#,width=250, height=50)
+	info_rownanie.place(relx=0.3, rely=0.3,relwidth=0.3,relheight=0.25, anchor='n')
+
+	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',30))
+	podaj_Wynik.place(relx=0.85, rely=0.425,relwidth=0.2,relheight=0.2, anchor='e')
+
+
+
+
 
 # initiallize app with basic settings
 root = CTk()
