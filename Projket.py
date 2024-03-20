@@ -2,6 +2,8 @@ from tkinter import *
 from PIL import *
 from customtkinter import *
 import random
+import time
+import timer
 
 # set colours
 bg_colour = '#3652AD'
@@ -102,8 +104,8 @@ def load_frame6(poziom_trudnosci):
 		liczby =[random.randint(1,10) for _ in range(3)]
 		operatory=[random.choice(["+","-","*"]) for _ in range(2)]
 	elif poziom_trudnosci==3:
-		liczby =[random.randint(1,10) for _ in range(3)]
-		operatory=[random.choice(["+","-","*","/"]) for _ in range(2)]
+		liczby =[random.randint(1,10) for _ in range(5)]
+		operatory=[random.choice(["+","-","*","/"]) for _ in range(3)]
 
 	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
 	wynik=eval(rownanie)
@@ -111,8 +113,19 @@ def load_frame6(poziom_trudnosci):
 	info_rownanie=CTkLabel(page6_RownaniaMatematyczne,text=rownanie,fg_color='white',font=('Arial',55),corner_radius=10)#,width=250, height=50)
 	info_rownanie.place(relx=0.3, rely=0.3,relwidth=0.3,relheight=0.25, anchor='n')
 
-	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',30))
+	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',55,'bold'),corner_radius=10)
 	podaj_Wynik.place(relx=0.85, rely=0.425,relwidth=0.2,relheight=0.2, anchor='e')
+
+	def sprawdz():
+		wpisany_wynik=podaj_Wynik.get().strip()
+		if wpisany_wynik==str(wynik):
+			podaj_Wynik.configure(fg_color='green')
+		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
+			podaj_Wynik.configure(fg_color='red')
+			podaj_Wynik.configure(state='disabled') # czy chcemy tak robić?
+
+	przycisk_sprawdz_rownanie=CTkButton(page6_RownaniaMatematyczne, text='Sprawdź',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75, command=sprawdz)
+	przycisk_sprawdz_rownanie.place(relx=0.5, rely=0.85, anchor='s')
 
 
 
