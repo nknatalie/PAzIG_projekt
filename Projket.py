@@ -27,61 +27,78 @@ def load_frame1():
 
 def load_frame2(cwiczenie):
 	def dalej():
-		poziom_trudnosci=radio_var_poziom.get()	
-		if cwiczenie == "czasu reakcji":
-			if poziom_trudnosci==1:
-				load_frame3()
-			elif poziom_trudnosci==2:
-				pass
-			elif poziom_trudnosci==3:
-				pass
-		elif cwiczenie == "treningu pamięci":
-			if poziom_trudnosci==1:
-				load_frame4()
-			elif poziom_trudnosci==2:
-				pass
-			elif poziom_trudnosci==3:
-				pass
-		elif cwiczenie == "kolejności alfabetycznej":
-			if poziom_trudnosci==1:
-				load_frame5()
-			elif poziom_trudnosci==2:
-				pass
-			elif poziom_trudnosci==3:
-				pass
-		elif cwiczenie == "równania matematycznego":
-			if poziom_trudnosci==1:
-				load_frame6()
-			elif poziom_trudnosci==2:
-				pass
-			elif poziom_trudnosci==3:
-				pass	
+		poziom_trudnosci=radio_var_poziom.get()
+		if poziom_trudnosci !=0:
+			if cwiczenie == "czasu reakcji":
+				load_frame3(poziom_trudnosci)
+			elif cwiczenie == "treningu pamięci":
+				load_frame4(poziom_trudnosci)
+			elif cwiczenie == "kolejności alfabetycznej":
+				load_frame5(poziom_trudnosci)
+			elif cwiczenie == "równania matematycznego":
+				load_frame6(poziom_trudnosci)
+		else:
+			komunikat_brak_wyboru.place(relx=0.5,rely=0.15, anchor='n')
+
 	page2_trudnosc.tkraise()
-	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',40),corner_radius=32,width=250, height=75 )
+	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',50),corner_radius=32,width=250, height=75 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	radio_var_poziom=IntVar()
-	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',40,'bold'),value=1,variable=radio_var_poziom)
+	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',45,'bold'),value=1,variable=radio_var_poziom)
 	rb_latwy.place(relx=0.15, rely=0.60,anchor='w')
-	rb_sredni=CTkRadioButton(page2_trudnosc, text="Średni", font=('Arial',40,'bold'),value=2, variable=radio_var_poziom)
+	rb_sredni=CTkRadioButton(page2_trudnosc, text="Średni", font=('Arial',45,'bold'),value=2, variable=radio_var_poziom)
 	rb_sredni.place(relx=0.45, rely=0.60,anchor='w')
-	rb_trudny=CTkRadioButton(page2_trudnosc, text="Trudny", font=('Arial',40,'bold'),value=3,variable=radio_var_poziom)
+	rb_trudny=CTkRadioButton(page2_trudnosc, text="Trudny", font=('Arial',45,'bold'),value=3,variable=radio_var_poziom)
 	rb_trudny.place(relx=0.80, rely=0.60,anchor='w')
 
-	zatwierdzenie_trudnosci=CTkButton(page2_trudnosc,text='Dalej',font=('Arial',40),corner_radius=32,width=250, height=75, command= dalej)
+	zatwierdzenie_trudnosci=CTkButton(page2_trudnosc,text='Dalej',font=('Arial',50),corner_radius=32,width=250, height=75, command= dalej)
 	zatwierdzenie_trudnosci.place(relx=0.5,rely=0.80,anchor='n')
 
+	komunikat_brak_wyboru=CTkLabel(page2_trudnosc, text="Wybierz poziom trudności!",fg_color='red',font=('Arial',40),corner_radius=32,width=250, height=75)
+	komunikat_brak_wyboru.forget()
 
-def load_frame3():
+
+def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
+	info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',50,'bold'),corner_radius=32,width=250, height=75 )
+	info_zapamietajObiekt.place(relx=0.5,rely=0.05,anchor='n')
+	if poziom_trudnosci==1:
+		pass
+	elif poziom_trudnosci==2:
+		pass
+	elif poziom_trudnosci==3:
+		pass
 
-def load_frame4():
+def load_frame4(poziom_trudnosci):
 	page4_TreningPamieci.tkraise()
+	info_zapamietajKolejnosc=CTkLabel(page4_TreningPamieci,text='Zapamiętaj kolejność!',fg_color='white', font=('Arial',50,'bold'),corner_radius=32,width=250, height=75 )
+	info_zapamietajKolejnosc.place(relx=0.5,rely=0.05,anchor='n')
+	if poziom_trudnosci==1:
+		pass
+	elif poziom_trudnosci==2:
+		pass
+	elif poziom_trudnosci==3:
+		pass
 
-def load_frame5():
+def load_frame5(poziom_trudnosci):
 	page5_KolejnoscAlfabetyczna.tkraise()
+	if poziom_trudnosci==1:
+		pass
+	elif poziom_trudnosci==2:
+		pass
+	elif poziom_trudnosci==3:
+		pass
 
-def load_frame6():
+def load_frame6(poziom_trudnosci):
 	page6_RownaniaMatematyczne.tkraise()
+	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',50,'bold'),corner_radius=32,width=250, height=75 )
+	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')	
+	if poziom_trudnosci==1:
+		pass
+	elif poziom_trudnosci==2:
+		pass
+	elif poziom_trudnosci==3:
+		pass
 
 # initiallize app with basic settings
 root = CTk()
