@@ -105,7 +105,7 @@ def load_frame6(poziom_trudnosci):
 		operatory=[random.choice(["+","-"]) for _ in range(2)]
 	elif poziom_trudnosci==2:
 		liczby =[random.randint(1,10) for _ in range(3)]
-		operatory=[random.choice(["+","-","*"]) for _ in range(2)]
+		operatory=[random.choice(["+","-"]) for _ in range(2)]
 	elif poziom_trudnosci==3:
 		liczby =[random.randint(1,10) for _ in range(5)]
 		operatory=[random.choice(["+","-","*"]) for _ in range(3)]
