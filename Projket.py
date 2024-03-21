@@ -96,7 +96,10 @@ def load_frame5(poziom_trudnosci):
 def load_frame6(poziom_trudnosci):
 	page6_RownaniaMatematyczne.tkraise()
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
-	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')	
+	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')
+
+	liczba_rund=5 if poziom_trudnosci==1 else  7 if poziom_trudnosci==2 else 10 
+
 	if poziom_trudnosci==1:
 		liczby =[random.randint(1,10) for _ in range(3)]
 		operatory=[random.choice(["+","-"]) for _ in range(2)]
@@ -116,16 +119,55 @@ def load_frame6(poziom_trudnosci):
 	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',55,'bold'),corner_radius=10)
 	podaj_Wynik.place(relx=0.85, rely=0.425,relwidth=0.2,relheight=0.2, anchor='e')
 
+
+	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
+	wynik=eval(rownanie)
+
 	def sprawdz():
+		nonlocal liczba_rund
 		wpisany_wynik=podaj_Wynik.get().strip()
 		if wpisany_wynik==str(wynik):
 			podaj_Wynik.configure(fg_color='green')
+			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
+			if liczba_rund>0:
+				przycisk_sprawdz_rownanie.configure(text='Dalej')
+			else:
+				przycisk_sprawdz_rownanie.configure(text='Koniec rund',state='disabled')
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 			podaj_Wynik.configure(fg_color='red')
-			podaj_Wynik.configure(state='disabled') # czy chcemy tak robić?
+			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
+			#podaj_Wynik.configure(state='disabled') # czy chcemy tak robić?
+			if liczba_rund>0:
+				przycisk_sprawdz_rownanie.configure(text='Dalej')
+				przycisk_sprawdz_rownanie.configure(text='Koniec rund',state='disabled')
+
+	def nastepna_runda(poziom_trudnosci,liczba_rund):
+		nonlocal liczby,operatory,rownanie,wynik
+		if liczba_rund >0:
+			liczba_rund -=1
+			if poziom_trudnosci==1:
+				liczby =[random.randint(1,10) for _ in range(3)]
+				operatory=[random.choice(["+","-"]) for _ in range(2)]
+			elif poziom_trudnosci==2:
+				liczby =[random.randint(1,10) for _ in range(3)]
+				operatory=[random.choice(["+","-","*"]) for _ in range(2)]
+			elif poziom_trudnosci==3:
+				liczby =[random.randint(1,10) for _ in range(5)]
+				operatory=[random.choice(["+","-","*","/"]) for _ in range(3)]
+			
+			rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
+			wynik=eval(rownanie)
+			info_rownanie.configure(text=rownanie)
+			podaj_Wynik.delete(0,'end')
+			podaj_Wynik.configure(fg_color='white')
+			przycisk_sprawdz_rownanie.configure(text='Sprawdź', command=sprawdz)
+		return liczba_rund
+
 
 	przycisk_sprawdz_rownanie=CTkButton(page6_RownaniaMatematyczne, text='Sprawdź',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75, command=sprawdz)
 	przycisk_sprawdz_rownanie.place(relx=0.5, rely=0.85, anchor='s')
+
+
 
 
 # initiallize app with basic settings
