@@ -128,9 +128,6 @@ def load_frame6(poziom_trudnosci):
 	przycisk_sprawdz_rownanie.place(relx=0.5, rely=0.85, anchor='s')
 
 
-
-
-
 # initiallize app with basic settings
 root = CTk()
 root.title("Ćwiczenia")
