@@ -93,7 +93,7 @@ def load_frame5(poziom_trudnosci):
 	elif poziom_trudnosci==3:
 		pass
 
-def load_frame6(poziom_trudnosci):
+def load_frame6(poziom_trudnosci): # wstęp zrobiony
 	page6_RownaniaMatematyczne.tkraise()
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')
@@ -123,7 +123,7 @@ def load_frame6(poziom_trudnosci):
 	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
 	wynik=eval(rownanie)
 
-	def koniec():
+	def koniec(): # czy tu można zrobić, tylko jedną funkcję czy musi być dla każdego ćwiczenia osobna?
 		print('0k')
 
 	def sprawdz():
