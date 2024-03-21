@@ -98,7 +98,7 @@ def load_frame6(poziom_trudnosci):
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')
 
-	liczba_rund=5 if poziom_trudnosci==1 else  7 if poziom_trudnosci==2 else 10 
+	liczba_rund=4 if poziom_trudnosci==1 else  6 if poziom_trudnosci==2 else 9 # 5 rund dla łatwej; 7 dla średniej; 10 dla trudnej
 
 	if poziom_trudnosci==1:
 		liczby =[random.randint(1,10) for _ in range(3)]
@@ -123,6 +123,9 @@ def load_frame6(poziom_trudnosci):
 	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
 	wynik=eval(rownanie)
 
+	def koniec():
+		print('0k')
+
 	def sprawdz():
 		nonlocal liczba_rund
 		wpisany_wynik=podaj_Wynik.get().strip()
@@ -132,14 +135,14 @@ def load_frame6(poziom_trudnosci):
 			if liczba_rund>0:
 				przycisk_sprawdz_rownanie.configure(text='Dalej')
 			else:
-				przycisk_sprawdz_rownanie.configure(text='Koniec rund',state='disabled')
+				przycisk_sprawdz_rownanie.configure(text='Koniec rund',command=koniec)
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 			podaj_Wynik.configure(fg_color='red')
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
 			#podaj_Wynik.configure(state='disabled') # czy chcemy tak robić?
 			if liczba_rund>0:
 				przycisk_sprawdz_rownanie.configure(text='Dalej')
-				przycisk_sprawdz_rownanie.configure(text='Koniec rund',state='disabled')
+				przycisk_sprawdz_rownanie.configure(text='Koniec rund',command=koniec)
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
 		nonlocal liczby,operatory,rownanie,wynik
@@ -166,8 +169,6 @@ def load_frame6(poziom_trudnosci):
 
 	przycisk_sprawdz_rownanie=CTkButton(page6_RownaniaMatematyczne, text='Sprawdź',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75, command=sprawdz)
 	przycisk_sprawdz_rownanie.place(relx=0.5, rely=0.85, anchor='s')
-
-
 
 
 # initiallize app with basic settings
