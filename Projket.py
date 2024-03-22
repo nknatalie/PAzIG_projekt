@@ -1,5 +1,5 @@
 from tkinter import *
-from PIL import *
+from PIL import Image, ImageTk
 from customtkinter import *
 import random
 import time
@@ -98,6 +98,9 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')
 
+	info_o_wyniku=CTkLabel(page6_RownaniaMatematyczne, text='')
+	info_o_wyniku.place(relx=0.5, rely=0.75, anchor='s')
+
 	liczba_rund=4 if poziom_trudnosci==1 else  6 if poziom_trudnosci==2 else 9 # 5 rund dla łatwej; 7 dla średniej; 10 dla trudnej
 
 	if poziom_trudnosci==1:
@@ -105,10 +108,21 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 		operatory=[random.choice(["+"]) for _ in range(1)]
 	elif poziom_trudnosci==2:
 		liczby =[random.randint(1,10) for _ in range(3)]
-		operatory=[random.choice(["+","-"]) for _ in range(2)]
+		operatory=[random.choice(["+","-"]) for _ in range(2)]	
 	elif poziom_trudnosci==3:
 		liczby =[random.randint(1,10) for _ in range(5)]
-		operatory=[random.choice(["+","-","*"]) for _ in range(3)] # tylko jedno mnożenie 
+		#operatory=[random.choice(["+","-","*"]) for _ in range(3)] # tylko jedno mnożenie 
+		operatory=[]
+		ilosc_mnozenia=0
+		for _ in range(3):
+			if ilosc_mnozenia ==0:
+				operator= random.choice(["+","-","*"])
+			else:
+				operator=random.choice(["+","-"])
+			if operator == "*":
+				ilosc_mnozenia +=1
+			operatory.append(operator)
+			
 				
 
 	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + " "+ str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
@@ -129,30 +143,23 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 	def sprawdz():
 		nonlocal liczba_rund
 		wpisany_wynik=podaj_Wynik.get().strip()
-		'''
-		if liczba_rund>0:
-			przycisk_sprawdz_rownanie.configure(text='Dalej')
-			if wpisany_wynik==str(wynik):
-				podaj_Wynik.configure(fg_color='green')
-				liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-			elif wpisany_wynik !='':
-				podaj_Wynik.configure(fg_color='red')
-		else:
-			przycisk_sprawdz_rownanie.configure(text='Koniec')		
-		'''
-
- # 2s ptaszek lub x ; bez kolorów; 		
 		if wpisany_wynik==str(wynik):
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-			if liczba_rund>0:
-				przycisk_sprawdz_rownanie.configure(text='Dalej')
-			else:
+			obrazek_ok_dp=Image.open('ok.png')
+			obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
+			obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
+			info_o_wyniku.configure(image=obrazek_ok_dp)
+			info_o_wyniku.image=obrazek_ok_dp
+			if liczba_rund<0:
 				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-			if liczba_rund>0:
-				przycisk_sprawdz_rownanie.configure(text='Dalej')
-			else:
+			obrazek_ok_dp=Image.open('nie ok.png')
+			obrazek_ok_dp=obrazek_ok_dp.resize((100,100),Image.BILINEAR)
+			obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
+			info_o_wyniku.configure(image=obrazek_ok_dp)
+			info_o_wyniku.image=obrazek_ok_dp
+			if liczba_rund<0:
 				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)		
 		
 
@@ -168,7 +175,17 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 				operatory=[random.choice(["+","-"]) for _ in range(2)]
 			elif poziom_trudnosci==3:
 				liczby =[random.randint(1,10) for _ in range(5)]
-				operatory=[random.choice(["+","-","*"]) for _ in range(3)]
+				#operatory=[random.choice(["+","-","*"]) for _ in range(3)]
+				operatory=[]
+				ilosc_mnozenia=0
+				for _ in range(3):
+					if ilosc_mnozenia ==0:
+						operator= random.choice(["+","-","*"])
+					else:
+						operator=random.choice(["+","-"])
+					if operator == "*":
+						ilosc_mnozenia +=1
+					operatory.append(operator)				
 			
 			rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + " " +  str(liczby[-1])  
 			wynik=eval(rownanie)
