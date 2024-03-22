@@ -93,7 +93,7 @@ def load_frame5(poziom_trudnosci):
 	elif poziom_trudnosci==3:
 		pass
 
-def load_frame6(poziom_trudnosci): # wstęp zrobiony
+def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić 
 	page6_RownaniaMatematyczne.tkraise()
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')
