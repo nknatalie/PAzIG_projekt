@@ -150,7 +150,6 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 			obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
 			obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
 			info_o_wyniku.configure(image=obrazek_ok_dp)
-			info_o_wyniku.image=obrazek_ok_dp
 			if liczba_rund<0:
 				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
@@ -159,7 +158,6 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 			obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
 			obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
 			info_o_wyniku.configure(image=obrazek_nie_ok_dp)
-			info_o_wyniku.image=obrazek_nie_ok_dp
 			if liczba_rund<0:
 				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)		
 
