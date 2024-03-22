@@ -140,6 +140,7 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 	def koniec(): # czy tu można zrobić, tylko jedną funkcję czy musi być dla każdego ćwiczenia osobna?
 		print('0k')
 
+	
 	def sprawdz():
 		nonlocal liczba_rund
 		wpisany_wynik=podaj_Wynik.get().strip()
@@ -154,14 +155,13 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-			obrazek_ok_dp=Image.open('nie ok.png')
-			obrazek_ok_dp=obrazek_ok_dp.resize((100,100),Image.BILINEAR)
-			obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
-			info_o_wyniku.configure(image=obrazek_ok_dp)
-			info_o_wyniku.image=obrazek_ok_dp
+			obrazek_nie_ok_dp=Image.open('nie ok.png')
+			obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
+			obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
+			info_o_wyniku.configure(image=obrazek_nie_ok_dp)
+			info_o_wyniku.image=obrazek_nie_ok_dp
 			if liczba_rund<0:
 				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)		
-		
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
 		nonlocal liczby,operatory,rownanie,wynik
