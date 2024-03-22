@@ -62,6 +62,18 @@ def load_frame2(cwiczenie):
 	komunikat_brak_wyboru.forget()
 
 
+def koniec(cwiczenie, poziom_trudnosci):
+	page7_koniec.tkraise()
+	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
+	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
+
+	napis_TwojWynik=CTkLabel(ramka_koniec,text='Twój wynik: ',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75) #tu trzeba zrobić f' {ile ten wynik wynosi}'
+	napis_TwojWynik.place(relx=0.5,rely=0.1,relwidth=0.35,relheight=0.15, anchor='n')
+
+	podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
+	podaj_nick.place(relx=0.5,rely=0.45,relwidth=0.50,relheight=0.40, anchor='n')
+	print(f'{cwiczenie}, {poziom_trudnosci}')
+
 def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
 	info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
@@ -136,10 +148,6 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić
 
 	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',55,'bold'),corner_radius=10, justify=CENTER)
 	podaj_Wynik.place(relx=0.85, rely=0.425,relwidth=0.2,relheight=0.2, anchor='e')
-
-	def koniec(): # czy tu można zrobić, tylko jedną funkcję czy musi być dla każdego ćwiczenia osobna?
-		print('0k')
-
 	
 	def sprawdz():
 		nonlocal liczba_rund
@@ -150,16 +158,12 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić
 			obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
 			obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
 			info_o_wyniku.configure(image=obrazek_ok_dp)
-			if liczba_rund<0:
-				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
 			obrazek_nie_ok_dp=Image.open('nie ok.png')
 			obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
 			obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
-			info_o_wyniku.configure(image=obrazek_nie_ok_dp)
-			if liczba_rund<0:
-				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)		
+			info_o_wyniku.configure(image=obrazek_nie_ok_dp)	
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
 		nonlocal liczby,operatory,rownanie,wynik
@@ -191,6 +195,8 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić
 			podaj_Wynik.delete(0,'end')
 			podaj_Wynik.configure(fg_color='white')
 			przycisk_sprawdz_rownanie.configure(text='Sprawdź', command=sprawdz)
+		if liczba_rund==0:
+			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("równania matematycznego", poziom_trudnosci))
 		return liczba_rund
 
 
@@ -216,9 +222,10 @@ page3_CzasReakcji = Frame(root, bg=bg_colour)
 page4_TreningPamieci = Frame(root, bg=bg_colour)
 page5_KolejnoscAlfabetyczna= Frame(root, bg=bg_colour)
 page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
+page7_koniec=Frame(root,bg=bg_colour)
 
 # place frame widgets in window
-for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne):
+for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne,page7_koniec):
 	frame.grid(row=0, column=0, sticky="nesw")
 
 # load the first frame
