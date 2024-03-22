@@ -6,11 +6,11 @@ import time
 import timer
 
 # set colours
-bg_colour = '#3652AD'
+bg_colour = '#285A88'
 # the first frame 
 def load_frame1():
 	page1_start.tkraise()
-	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#FFEAA7')
+	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#5E7FA6')
 	ramka_start.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
 	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
@@ -125,6 +125,17 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 	def sprawdz():
 		nonlocal liczba_rund
 		wpisany_wynik=podaj_Wynik.get().strip()
+		if liczba_rund>0:
+			przycisk_sprawdz_rownanie.configure(text='Dalej')
+			if wpisany_wynik==str(wynik):
+				podaj_Wynik.configure(fg_color='green')
+				liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
+			elif wpisany_wynik !='':
+				podaj_Wynik.configure(fg_color='red')
+				podaj_Wynik.delete(0,'end')
+		else:
+			przycisk_sprawdz_rownanie.configure(text='Koniec')
+		'''
 		if wpisany_wynik==str(wynik):
 			podaj_Wynik.configure(fg_color='green')
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
@@ -138,7 +149,9 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 			#podaj_Wynik.configure(state='disabled') # czy chcemy tak robić?
 			if liczba_rund>0:
 				przycisk_sprawdz_rownanie.configure(text='Dalej')
-				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
+				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)		
+		'''
+
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
 		nonlocal liczby,operatory,rownanie,wynik
