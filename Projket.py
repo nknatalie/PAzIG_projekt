@@ -101,16 +101,16 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 	liczba_rund=4 if poziom_trudnosci==1 else  6 if poziom_trudnosci==2 else 9 # 5 rund dla łatwej; 7 dla średniej; 10 dla trudnej
 
 	if poziom_trudnosci==1:
-		liczby =[random.randint(1,10) for _ in range(3)]
-		operatory=[random.choice(["+","-"]) for _ in range(2)]
+		liczby =[random.randint(1,10) for _ in range(2)]
+		operatory=[random.choice(["+"]) for _ in range(1)]
 	elif poziom_trudnosci==2:
 		liczby =[random.randint(1,10) for _ in range(3)]
 		operatory=[random.choice(["+","-"]) for _ in range(2)]
 	elif poziom_trudnosci==3:
 		liczby =[random.randint(1,10) for _ in range(5)]
-		operatory=[random.choice(["+","-","*"]) for _ in range(3)]
+		operatory=[random.choice(["+","-","*"]) for _ in range(3)]  # tylko jedno mnożenie 
 
-	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
+	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + " "+ str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
 	wynik=eval(rownanie)
 
 	info_rownanie=CTkLabel(page6_RownaniaMatematyczne,text=rownanie,fg_color='white',font=('Arial',55),corner_radius=10)#,width=250, height=50)
@@ -118,10 +118,6 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 
 	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',55,'bold'),corner_radius=10)
 	podaj_Wynik.place(relx=0.85, rely=0.425,relwidth=0.2,relheight=0.2, anchor='e')
-
-
-	rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
-	wynik=eval(rownanie)
 
 	def koniec(): # czy tu można zrobić, tylko jedną funkcję czy musi być dla każdego ćwiczenia osobna?
 		print('0k')
@@ -135,30 +131,30 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony
 			if liczba_rund>0:
 				przycisk_sprawdz_rownanie.configure(text='Dalej')
 			else:
-				przycisk_sprawdz_rownanie.configure(text='Koniec rund',command=koniec)
+				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
 		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 			podaj_Wynik.configure(fg_color='red')
 			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
 			#podaj_Wynik.configure(state='disabled') # czy chcemy tak robić?
 			if liczba_rund>0:
 				przycisk_sprawdz_rownanie.configure(text='Dalej')
-				przycisk_sprawdz_rownanie.configure(text='Koniec rund',command=koniec)
+				przycisk_sprawdz_rownanie.configure(text='Koniec',command=koniec)
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
 		nonlocal liczby,operatory,rownanie,wynik
 		if liczba_rund >0:
 			liczba_rund -=1
 			if poziom_trudnosci==1:
-				liczby =[random.randint(1,10) for _ in range(3)]
-				operatory=[random.choice(["+","-"]) for _ in range(2)]
+				liczby =[random.randint(1,10) for _ in range(2)]
+				operatory=[random.choice(["+"]) for _ in range(1)]
 			elif poziom_trudnosci==2:
 				liczby =[random.randint(1,10) for _ in range(3)]
-				operatory=[random.choice(["+","-","*"]) for _ in range(2)]
+				operatory=[random.choice(["+","-"]) for _ in range(2)]
 			elif poziom_trudnosci==3:
 				liczby =[random.randint(1,10) for _ in range(5)]
-				operatory=[random.choice(["+","-","*","/"]) for _ in range(3)]
+				operatory=[random.choice(["+","-","*"]) for _ in range(3)]
 			
-			rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + str(liczby[-1])  ## CZY WYNIK ROBIMY UJEMNY ??
+			rownanie = " ".join(str(liczba) + " " + operator for liczba, operator in zip(liczby, operatory)) + " " +  str(liczby[-1])  
 			wynik=eval(rownanie)
 			info_rownanie.configure(text=rownanie)
 			podaj_Wynik.delete(0,'end')
