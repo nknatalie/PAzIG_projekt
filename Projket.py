@@ -3,7 +3,10 @@ from PIL import Image, ImageTk
 from customtkinter import *
 import random
 import time
-import timer
+#import timer
+
+
+czasCwiczenia = 0.0
 
 # set colours
 bg_colour = '#285A88'
@@ -67,7 +70,7 @@ def koniec(cwiczenie, poziom_trudnosci):
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	napis_TwojWynik=CTkLabel(ramka_koniec,text='Twój wynik: ',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75) #tu trzeba zrobić f' {ile ten wynik wynosi}'
+	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: {czasCwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75) #tu trzeba zrobić f' {ile ten wynik wynosi}'
 	napis_TwojWynik.place(relx=0.5,rely=0.1,relwidth=0.35,relheight=0.15, anchor='n')
 
 	podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
@@ -107,6 +110,10 @@ def load_frame5(poziom_trudnosci):
 
 def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić 
 	page6_RownaniaMatematyczne.tkraise()
+
+	global czasCwiczenia
+	czasCwiczenia = time.time()
+
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
 	info_rozwiazRownanie.place(relx=0.5,rely=0.05,anchor='n')
 
@@ -125,9 +132,9 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić
 		liczby =[random.randint(1,10) for _ in range(5)]
 		#operatory=[random.choice(["+","-","*"]) for _ in range(3)] # tylko jedno mnożenie 
 		operatory=[]
-		ilosc_mnozenia=0
+		ilosc_mnozenia = 0
 		for _ in range(3):
-			if ilosc_mnozenia ==0:
+			if ilosc_mnozenia == 0:
 				operator= random.choice(["+","-","*"])
 			else:
 				operator=random.choice(["+","-"])
@@ -166,6 +173,7 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić
 			info_o_wyniku.configure(image=obrazek_nie_ok_dp)	
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
+		global czasCwiczenia
 		nonlocal liczby,operatory,rownanie,wynik
 		if liczba_rund >0:
 			liczba_rund -=1
@@ -196,6 +204,7 @@ def load_frame6(poziom_trudnosci): # wstęp zrobiony # ten czas trzeba zrobić
 			podaj_Wynik.configure(fg_color='white')
 			przycisk_sprawdz_rownanie.configure(text='Sprawdź', command=sprawdz)
 		if liczba_rund==0:
+			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
 			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("równania matematycznego", poziom_trudnosci))
 		return liczba_rund
 
