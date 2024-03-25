@@ -28,7 +28,7 @@ def load_frame1():
 	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne",command=lambda:load_frame2("równania matematycznego"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_RownanieMatematyczne.place(relx=0.85, rely=0.70, anchor='e')
 
-
+# 
 def load_frame2(cwiczenie):
 	def dalej():
 		poziom_trudnosci=radio_var_poziom.get()
