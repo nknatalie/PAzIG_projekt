@@ -47,6 +47,7 @@ def load_frame2(cwiczenie):
 	page2_trudnosc.tkraise()
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
+
 	radio_var_poziom=IntVar()
 	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',45,'bold'),value=1,variable=radio_var_poziom)
 	rb_latwy.place(relx=0.15, rely=0.60,anchor='w')
