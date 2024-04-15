@@ -16,16 +16,16 @@ def load_frame1():
 	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
 
-	wybor_CzasReakcji= CTkButton(ramka_start, text="Czas reakcji",  command=lambda: load_frame2("czasu reakcji"), font=('Arial',30),corner_radius=32,width=300, height=100) 
+	wybor_CzasReakcji= CTkButton(ramka_start, text="         Czas reakcji        ",  command=lambda: load_frame2("czasu reakcji"), font=('Arial',30),corner_radius=32,width=300, height=100) 
 	wybor_CzasReakcji.place(relx=0.15,rely=0.35,anchor='w')
 
-	wybor_TreningPamieci=CTkButton(ramka_start,text="Trening pamięci",command= lambda: load_frame2("treningu pamięci"),font=('Arial',30),corner_radius=32,width=300, height=100)
-	wybor_TreningPamieci.place(relx=0.65, rely=0.35, anchor='w')
+	wybor_TreningPamieci=CTkButton(ramka_start,text="        Trening pamięci        ",command= lambda: load_frame2("treningu pamięci"),font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_TreningPamieci.place(relx=0.85, rely=0.35, anchor='e')
 
 	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=lambda:load_frame2("kolejności alfabetycznej"), font=('Arial',30),corner_radius=32,width=300, height=100)
-	wybor_KolejnoscMatematyczna.place(relx=0.25, rely=0.755, anchor='s')
+	wybor_KolejnoscMatematyczna.place(relx=0.15, rely=0.70, anchor='w')
 
-	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne",command=lambda:load_frame2("równania matematycznego"), font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne ",command=lambda:load_frame2("równania matematycznego"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_RownanieMatematyczne.place(relx=0.85, rely=0.70, anchor='e')
 
 
@@ -53,21 +53,21 @@ def load_frame2(cwiczenie):
 	obrazek_latwy = ImageTk.PhotoImage(obrazek_latwy)
 	zdj_latwy = CTkLabel(page2_trudnosc, text='')
 	zdj_latwy.configure(image=obrazek_latwy)
-	zdj_latwy.place(relx=0.17, rely=0.40, anchor='w')
+	zdj_latwy.place(relx=0.1625, rely=0.40, anchor='w')
 
 	obrazek_sredni = Image.open("Icons/sredni.png")  
-	obrazek_sredni = obrazek_sredni.resize((275, 275), Image.BILINEAR)  
+	obrazek_sredni = obrazek_sredni.resize((375, 225), Image.BILINEAR)  
 	obrazek_sredni = ImageTk.PhotoImage(obrazek_sredni)
 	zdj_sredni = CTkLabel(page2_trudnosc, text='')
 	zdj_sredni.configure(image=obrazek_sredni)
-	zdj_sredni.place(relx=0.425, rely=0.40, anchor='w')
+	zdj_sredni.place(relx=0.4, rely=0.40, anchor='w')
 
 	obrazek_trudny = Image.open("Icons/trudny.png")  
-	obrazek_trudny = obrazek_trudny.resize((275, 275), Image.BILINEAR)  
+	obrazek_trudny = obrazek_trudny.resize((375, 225), Image.BILINEAR)  
 	obrazek_trudny = ImageTk.PhotoImage(obrazek_trudny)
 	zdj_trudny = CTkLabel(page2_trudnosc, text='')
 	zdj_trudny.configure(image=obrazek_trudny)
-	zdj_trudny.place(relx=0.80, rely=0.40, anchor='w')
+	zdj_trudny.place(relx=0.760, rely=0.40, anchor='w')
 
 
 
