@@ -47,12 +47,29 @@ def load_frame2(cwiczenie):
 	page2_trudnosc.tkraise()
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
-	obrazek_ikona = Image.open("Icons/latwy.png")  # Wymień odpowiednią nazwę pliku obrazka
-	obrazek_ikona = obrazek_ikona.resize((100, 100), Image.BILINEAR)  # Dostosowanie rozmiaru obrazka
-	obrazek_ikona = ImageTk.PhotoImage(obrazek_ikona)
-	ikona_label = CTkLabel(page2_trudnosc, text='')
-	ikona_label.configure(image=obrazek_ikona)
-	ikona_label.place(relx=0.5, rely=0.2, anchor='n')
+
+	obrazek_latwy = Image.open("Icons/latwy.png")  
+	obrazek_latwy = obrazek_latwy.resize((125, 125), Image.BILINEAR)  
+	obrazek_latwy = ImageTk.PhotoImage(obrazek_latwy)
+	zdj_latwy = CTkLabel(page2_trudnosc, text='')
+	zdj_latwy.configure(image=obrazek_latwy)
+	zdj_latwy.place(relx=0.17, rely=0.40, anchor='w')
+
+	obrazek_sredni = Image.open("Icons/sredni.png")  
+	obrazek_sredni = obrazek_sredni.resize((275, 275), Image.BILINEAR)  
+	obrazek_sredni = ImageTk.PhotoImage(obrazek_sredni)
+	zdj_sredni = CTkLabel(page2_trudnosc, text='')
+	zdj_sredni.configure(image=obrazek_sredni)
+	zdj_sredni.place(relx=0.425, rely=0.40, anchor='w')
+
+	obrazek_trudny = Image.open("Icons/trudny.png")  
+	obrazek_trudny = obrazek_trudny.resize((275, 275), Image.BILINEAR)  
+	obrazek_trudny = ImageTk.PhotoImage(obrazek_trudny)
+	zdj_trudny = CTkLabel(page2_trudnosc, text='')
+	zdj_trudny.configure(image=obrazek_trudny)
+	zdj_trudny.place(relx=0.80, rely=0.40, anchor='w')
+
+
 
 	radio_var_poziom=IntVar()
 	rb_latwy=CTkRadioButton(page2_trudnosc, text="Łatwy", font=('Arial',45,'bold'),value=1,variable=radio_var_poziom)
