@@ -24,7 +24,7 @@ connection_string=f"""
 	Trust_Connection=yes;
 """
 conn=pyodbc.connect(connection_string)
-cursir=conn.cursor()
+cursor=conn.cursor()
 print(conn)
 
 
@@ -36,37 +36,49 @@ def load_frame1():
 	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
 
-	wybor_CzasReakcji= CTkButton(ramka_start, text="         Czas reakcji        ",  command=lambda: load_frame2("czasu reakcji"), font=('Arial',30),corner_radius=32,width=300, height=100) 
+	wybor_CzasReakcji= CTkButton(ramka_start, text="         Czas reakcji        ",  command=lambda: load_frame2("CR"), font=('Arial',30),corner_radius=32,width=300, height=100) 
 	wybor_CzasReakcji.place(relx=0.15,rely=0.35,anchor='w')
 
-	wybor_TreningPamieci=CTkButton(ramka_start,text="        Trening pamięci        ",command= lambda: load_frame2("treningu pamięci"),font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_TreningPamieci=CTkButton(ramka_start,text="        Trening pamięci        ",command= lambda: load_frame2("TP"),font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_TreningPamieci.place(relx=0.85, rely=0.35, anchor='e')
 
-	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=lambda:load_frame2("kolejności alfabetycznej"), font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=lambda:load_frame2("KA"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_KolejnoscMatematyczna.place(relx=0.15, rely=0.70, anchor='w')
 
-	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne ",command=lambda:load_frame2("równania matematycznego"), font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne ",command=lambda:load_frame2("RM"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_RownanieMatematyczne.place(relx=0.85, rely=0.70, anchor='e')
 
 
 def load_frame2(cwiczenie):
+	if cwiczenie == 'CR':
+		cwiczenia='czasu reakcji'
+	elif cwiczenie == 'TP':
+		cwiczenia='treningu pamięci'
+	elif cwiczenie =='KA':
+		cwiczenia='kolejności alfabetycznej'
+	elif cwiczenie=='RM':
+		cwiczenia="równania matematycznego"
+
+	page2_trudnosc.tkraise()
+	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
+	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
+
+
 	def dalej():
 		poziom_trudnosci=radio_var_poziom.get()
 		if poziom_trudnosci !=0:
-			if cwiczenie == "czasu reakcji":
+			if cwiczenie == 'CR':#"czasu reakcji":
 				load_frame3(poziom_trudnosci)
-			elif cwiczenie == "treningu pamięci":
+			elif cwiczenie == 'TP':#"treningu pamięci":
 				load_frame4(poziom_trudnosci)
-			elif cwiczenie == "kolejności alfabetycznej":
+			elif cwiczenie == 'KA':#"kolejności alfabetycznej":
 				load_frame5(poziom_trudnosci)
-			elif cwiczenie == "równania matematycznego":
+			elif cwiczenie == 'RM':#"równania matematycznego":
 				load_frame6(poziom_trudnosci)
 		else:
 			komunikat_brak_wyboru.place(relx=0.5,rely=0.15, anchor='n')
+	
 
-	page2_trudnosc.tkraise()
-	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
-	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 
 	obrazek_latwy = Image.open("Icons/latwy.png")  
 	obrazek_latwy = obrazek_latwy.resize((125, 125), Image.BILINEAR)  
@@ -331,7 +343,7 @@ def load_frame4(poziom_trudnosci):
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2) #tu trzeba bedzie odjąć czas który się odlicza
 			button_dalej.place(relx=0.5,rely=0.90, anchor='s')
 			button_dalej.configure(text='Koniec')
-			button_dalej.configure(command=lambda: koniec ("treningu pamięci", poziom_trudnosci))
+			button_dalej.configure(command=lambda: koniec ("TP", poziom_trudnosci))
 
 	start_rundy()
 
@@ -397,7 +409,7 @@ def load_frame5(poziom_trudnosci):
 		if liczba_rund ==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
 			przycisk_dalej.configure(text='Koniec')
-			przycisk_dalej.configure(command=lambda: koniec ("kolejność alfabetyczna", poziom_trudnosci))
+			przycisk_dalej.configure(command=lambda: koniec ("KA", poziom_trudnosci))
 			
 	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna,text='Dalej', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75,command=sprawdz)
 	przycisk_dalej.place(relx=0.9, rely=0.85,anchor='e')
@@ -502,7 +514,7 @@ def load_frame6(poziom_trudnosci):
 			przycisk_sprawdz_rownanie.configure(text='Sprawdź', command=sprawdz)
 		if liczba_rund==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
-			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("równania matematycznego", poziom_trudnosci))
+			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("RM", poziom_trudnosci))
 		return liczba_rund
 
 
