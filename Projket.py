@@ -7,15 +7,7 @@ import time
 # from pynput.keyboard import Key, Controller
 import keyboard
 #import timer
-space_pressed=False
-def on_press(event):
-	if event.name == 'space':
-		global space_pressed
-		space_pressed = True
-def on_release(event):
-	if event.name == 'space':
-		global space_pressed
-		space_pressed = False
+
 czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
@@ -117,14 +109,24 @@ def koniec(cwiczenie, poziom_trudnosci):
 
 	podaj_nick = CTkEntry(ramka_koniec, font=('Arial', 60), corner_radius=32, width=250, height=75)
 	podaj_nick.insert(0, 'Podaj nick!')
-	clear_entry()
 	podaj_nick.bind("<FocusIn>", clear_entry)
 	podaj_nick.bind("<FocusOut>", refill_entry)
 	podaj_nick.place(relx=0.5, rely=0.45, relwidth=0.50, relheight=0.30, anchor='n')
 
 	#podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	#podaj_nick.place(relx=0.5,rely=0.45,relwidth=0.50,relheight=0.30, anchor='n')
+ 
+	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci))
+	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
+	
 	print(f'{cwiczenie}, {poziom_trudnosci}')
+
+def wyniki(cwiczenie,poziom_trudnosci):
+	page8_koniec.tkraise()
+	PowrotStart_button=CTkButton(page8_koniec,text='Start',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
+	PowrotStart_button.place(relx=0.95,rely=0.05,anchor='e')
+	jeszczeRaz_button=CTkButton(page8_koniec,text='To samo',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
+	jeszczeRaz_button.place(relx=0.95,rely=0.2,anchor='e')
 
 
 def load_frame3(poziom_trudnosci):
@@ -215,8 +217,6 @@ def load_frame3(poziom_trudnosci):
 		wyswietla_obrazki.update()
 		time.sleep(1) # to możemy zmienić patrząć się na poziom trudności 	
 	'''
-
-
 
 
 def load_frame4(poziom_trudnosci):
@@ -457,18 +457,19 @@ def load_frame6(poziom_trudnosci):
 	def sprawdz():
 		nonlocal liczba_rund
 		wpisany_wynik=podaj_Wynik.get().strip()
-		if wpisany_wynik==str(wynik):
-			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-			#obrazek_ok_dp=Image.open('ok.png')
-			#obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
-			#obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
-			#info_o_wyniku.configure(image=obrazek_ok_dp)
-		elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
-			liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-			#obrazek_nie_ok_dp=Image.open('nie ok.png')
-			#obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
-			#obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
-			#info_o_wyniku.configure(image=obrazek_nie_ok_dp)	
+		if wpisany_wynik.isdigit():
+			if wpisany_wynik==str(wynik):
+				obrazek_ok_dp=Image.open('ok.png')
+				obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
+				obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
+				info_o_wyniku.configure(image=obrazek_ok_dp)
+				liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
+			elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
+				obrazek_nie_ok_dp=Image.open('zle.png')
+				obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
+				obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
+				info_o_wyniku.configure(image=obrazek_nie_ok_dp)	
+				liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
 
 	def nastepna_runda(poziom_trudnosci,liczba_rund):
 		global czasCwiczenia
@@ -530,9 +531,10 @@ page4_TreningPamieci = Frame(root, bg=bg_colour)
 page5_KolejnoscAlfabetyczna= Frame(root, bg=bg_colour)
 page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
 page7_koniec=Frame(root,bg=bg_colour)
+page8_koniec= Frame(root,bg=bg_colour)
 
 # place frame widgets in window
-for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne,page7_koniec):
+for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne,page7_koniec,page8_koniec):
 	frame.grid(row=0, column=0, sticky="nesw")
 
 # load the first frame
