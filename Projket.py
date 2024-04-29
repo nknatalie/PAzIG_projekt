@@ -118,7 +118,7 @@ def koniec(cwiczenie, poziom_trudnosci):
  
 	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci))
 	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
-	
+
 	print(f'{cwiczenie}, {poziom_trudnosci}')
 
 def wyniki(cwiczenie,poziom_trudnosci):
@@ -148,14 +148,16 @@ def load_frame3(poziom_trudnosci):
 	#keyboard.on_release_key('space', on_release)
 
 	def sprawdz():
-		page3_CzasReakcji.update()
+		wyswietla_obrazki.configure(image='')
+		info_zapamietajObiekt.configure(text='Zapamiętaj obiekt')
+		mierzy_czas.place(relx=0.5,rely=0.90, anchor='s')
+
+		start()
 
 	def start():
-		global space_pressed
 		nonlocal liczba_rund, czas_naZapamiętaine, czas_pomiedzy_obrazkami
-		space_pressed =False
 		while liczba_rund>0:
-		#liczba_rund -=1 # na razie są 4 rundy
+			#liczba_rund -=1 # na razie są 4 rundy
 		#if 0<= liczba_rund:
 			x = random.randrange(1, 10)
 			obrazek = Image.open(f"Czasreakcji\{x}.png")
@@ -170,26 +172,27 @@ def load_frame3(poziom_trudnosci):
 				page3_CzasReakcji.update()
 			mierzy_czas.place_forget()
 			wyswietla_obrazki.configure(image='')
-
-			while True:
-				if keyboard.is_pressed("space"):
-					print("kliknieto spacje") 
-					sprawdz()  
-					#break
-					
-					
-				info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
-				info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-				i=random.randint(1,10)
-				obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
-				obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
-				obrazek_2 = ImageTk.PhotoImage(obrazek_2)
-				wyswietla_obrazki.configure(image=obrazek_2)
-				wyswietla_obrazki.update()
+			
+			info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
+			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
+			i=random.randint(1,10)
+			obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
+			obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
+			obrazek_2 = ImageTk.PhotoImage(obrazek_2)
+			wyswietla_obrazki.configure(image=obrazek_2)
+			wyswietla_obrazki.update()
 					     
-				time.sleep(czas_pomiedzy_obrazkami)
-				page3_CzasReakcji.update() 
+			time.sleep(czas_pomiedzy_obrazkami)
+			#page3_CzasReakcji.update() 
 			liczba_rund -=1
+
+		while True:
+			if keyboard.is_pressed("space"):
+				print("kliknieto spacje") 
+				sprawdz()  
+				#break
+				
+
 
 		#print(x)
 		return x
