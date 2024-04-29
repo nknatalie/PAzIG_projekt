@@ -65,7 +65,7 @@ def load_frame2(cwiczenie):
 			komunikat_brak_wyboru.place(relx=0.5,rely=0.15, anchor='n')
 
 	page2_trudnosc.tkraise()
-	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75 )
+	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenie}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 
 	obrazek_latwy = Image.open("Icons/latwy.png")  
@@ -139,10 +139,12 @@ def koniec(cwiczenie, poziom_trudnosci):
 
 def wyniki(cwiczenie,poziom_trudnosci):
 	page8_koniec.tkraise()
-	PowrotStart_button=CTkButton(page8_koniec,text='Start',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
-	PowrotStart_button.place(relx=0.95,rely=0.05,anchor='e')
-	jeszczeRaz_button=CTkButton(page8_koniec,text='To samo',font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
-	jeszczeRaz_button.place(relx=0.95,rely=0.2,anchor='e')
+	info_tabelawynikow=CTkLabel(page8_koniec,text='Tabela wyników',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85)
+	info_tabelawynikow.place(relx=0.5,rely=0.05,anchor='n')
+	PowrotStart_button=CTkButton(page8_koniec,text='  Wróć do menu  ',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=load_frame1)
+	PowrotStart_button.place(relx=0.3,rely=0.9,anchor='s')
+	jeszczeRaz_button=CTkButton(page8_koniec,text='Zagraj jeszcze raz',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=lambda:load_frame2(cwiczenie))
+	jeszczeRaz_button.place(relx=0.725,rely=0.9,anchor='s')
 
 
 def load_frame3(poziom_trudnosci):
