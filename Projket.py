@@ -199,6 +199,9 @@ def load_frame3(poziom_trudnosci):
 				pozostaly_czas=int(czas_naZapamiętaine-(time.perf_counter()-start_time))
 				mierzy_czas.configure(text=f'{pozostaly_czas}')
 
+				if keyboard.is_pressed("space"):
+					print("kliknieto spacje") 
+					sprawdz()  
 				
 				page3_CzasReakcji.update()
 				
@@ -207,19 +210,16 @@ def load_frame3(poziom_trudnosci):
 			
 			info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
 			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-			while time.perf_counter()-start_time<czas_pomiedzy_obrazkami:
-				i=random.randint(1,10)
-				obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
-				obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
-				obrazek_2 = ImageTk.PhotoImage(obrazek_2)
-				wyswietla_obrazki.configure(image=obrazek_2)
-				wyswietla_obrazki.update()				
 
-				if keyboard.is_pressed("space"):
-					print("kliknieto spacje") 
-					sprawdz()  
+			i=random.randint(1,10)
+			obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
+			obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
+			obrazek_2 = ImageTk.PhotoImage(obrazek_2)
+			wyswietla_obrazki.configure(image=obrazek_2)
+			wyswietla_obrazki.update()				
+
+
 					#break	  
-	 
  
 			#time.sleep(czas_pomiedzy_obrazkami)
 			#page3_CzasReakcji.update() 
