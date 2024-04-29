@@ -164,9 +164,6 @@ def load_frame3(poziom_trudnosci):
 	wyswietla_obrazki.place(relx=0.5, rely=0.6, anchor='s')
 	info_kliknijspace=CTkLabel(page3_CzasReakcji, text='Kliknij w spacje',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 
-	#keyboard.on_press_key('space', on_press)
-	#keyboard.on_release_key('space', on_release)
-
 	def sprawdz():
 		wyswietla_obrazki.configure(image='')
 		info_zapamietajObiekt.configure(text='Zapamiętaj obiekt')
@@ -189,57 +186,35 @@ def load_frame3(poziom_trudnosci):
 			while time.perf_counter()-start_time<czas_naZapamiętaine:
 				pozostaly_czas=int(czas_naZapamiętaine-(time.perf_counter()-start_time))
 				mierzy_czas.configure(text=f'{pozostaly_czas}')
+
+				
 				page3_CzasReakcji.update()
+				
 			mierzy_czas.place_forget()
 			wyswietla_obrazki.configure(image='')
 			
 			info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
 			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-			i=random.randint(1,10)
-			obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
-			obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
-			obrazek_2 = ImageTk.PhotoImage(obrazek_2)
-			wyswietla_obrazki.configure(image=obrazek_2)
-			wyswietla_obrazki.update()
-					     
-			time.sleep(czas_pomiedzy_obrazkami)
+			while time.perf_counter()-start_time<czas_pomiedzy_obrazkami:
+				i=random.randint(1,10)
+				obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
+				obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
+				obrazek_2 = ImageTk.PhotoImage(obrazek_2)
+				wyswietla_obrazki.configure(image=obrazek_2)
+				wyswietla_obrazki.update()				
+
+				if keyboard.is_pressed("space"):
+					print("kliknieto spacje") 
+					sprawdz()  
+					#break	  
+	 
+ 
+			#time.sleep(czas_pomiedzy_obrazkami)
 			#page3_CzasReakcji.update() 
-			liczba_rund -=1
-
-		while True:
-			if keyboard.is_pressed("space"):
-				print("kliknieto spacje") 
-				sprawdz()  
-				#break
-				
-
-
-		#print(x)
+			liczba_rund -=1				
 		return x
 		
 	start()
-	'''
-	katalog=f'Czasreakcji/{poziom_trudnosci}'
-	lista_obrazkow=os.listdir(katalog)
-
-	wybrany_obrazek= random.choice(lista_obrazkow)
-	obrazek = Image.open(f"{katalog}/{wybrany_obrazek}")
-	obrazek = obrazek.resize((400, 400), Image.BILINEAR)
-	obrazek = ImageTk.PhotoImage(obrazek)
-	wyswietla_obrazki.configure(image=obrazek)
-	wyswietla_obrazki.place(relx=0.5, rely=0.6, anchor='s')
-	
-	for i in random.choice(lista_obrazkow):
-		info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
-		info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-		nowy_obrazek = random.choice(lista_obrazkow)
-		obrazek_2 = Image.open(f"{katalog}/{nowy_obrazek}")
-		obrazek_2 = obrazek_2.resize((400, 400), Image.BILINEAR)
-		obrazek_2 = ImageTk.PhotoImage(obrazek_2)
-		wyswietla_obrazki.configure(image=obrazek_2)
-		wyswietla_obrazki.update()
-		time.sleep(1) # to możemy zmienić patrząć się na poziom trudności 	
-	'''
 
 
 def load_frame4(poziom_trudnosci):
