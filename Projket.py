@@ -7,10 +7,26 @@ import time
 # from pynput.keyboard import Key, Controller
 import keyboard
 #import timer
+import pyodbc
 
 czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
+
+DRIVER_NAME='SQL SERVER'
+SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'
+DARABASE_NAME='Pazig'
+# tu można dodac jeszcze USERNAME oraz PASSWORD
+connection_string=f"""
+	DRIVER={{{DRIVER_NAME}}};
+	SERVER={SERVER_NAME};
+	DATABASE={DARABASE_NAME};
+	Trust_Connection=yes;
+"""
+conn=pyodbc.connect(connection_string)
+cursir=conn.cursor()
+print(conn)
+
 
 def load_frame1():
 	page1_start.tkraise()
