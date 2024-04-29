@@ -138,13 +138,15 @@ def koniec(cwiczenie, poziom_trudnosci):
 	print(f'{cwiczenie}, {poziom_trudnosci}')
 
 def wyniki(cwiczenie,poziom_trudnosci):
-	page8_koniec.tkraise()
-	info_tabelawynikow=CTkLabel(page8_koniec,text='Tabela wyników',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85)
+	page8_wyniki.tkraise()
+	info_tabelawynikow=CTkLabel(page8_wyniki,text='Tabela wyników',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85)
 	info_tabelawynikow.place(relx=0.5,rely=0.05,anchor='n')
-	PowrotStart_button=CTkButton(page8_koniec,text='  Wróć do menu  ',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=load_frame1)
+	PowrotStart_button=CTkButton(page8_wyniki,text='  Wróć do menu  ',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=load_frame1)
 	PowrotStart_button.place(relx=0.3,rely=0.9,anchor='s')
-	jeszczeRaz_button=CTkButton(page8_koniec,text='Zagraj jeszcze raz',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=lambda:load_frame2(cwiczenie))
+	jeszczeRaz_button=CTkButton(page8_wyniki,text='Zagraj jeszcze raz',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=lambda:load_frame2(cwiczenie))
 	jeszczeRaz_button.place(relx=0.725,rely=0.9,anchor='s')
+	ramka_wyniki=CTkFrame(page8_wyniki,corner_radius=10,fg_color='#5E7FA6' )
+	ramka_wyniki.place(relx=0.175,rely=0.15,relwidth=0.68,relheight=0.65)
 
 
 def load_frame3(poziom_trudnosci):
@@ -552,10 +554,10 @@ page4_TreningPamieci = Frame(root, bg=bg_colour)
 page5_KolejnoscAlfabetyczna= Frame(root, bg=bg_colour)
 page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
 page7_koniec=Frame(root,bg=bg_colour)
-page8_koniec= Frame(root,bg=bg_colour)
+page8_wyniki= Frame(root,bg=bg_colour)
 
 # place frame widgets in window
-for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne,page7_koniec,page8_koniec):
+for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne,page7_koniec,page8_wyniki):
 	frame.grid(row=0, column=0, sticky="nesw")
 
 # load the first frame
