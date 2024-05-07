@@ -50,6 +50,8 @@ def load_frame1():
 
 
 def load_frame2(cwiczenie):
+	page2_trudnosc.tkraise()
+	
 	if cwiczenie == 'CR':
 		cwiczenia='czasu reakcji'
 	elif cwiczenie == 'TP':
@@ -59,9 +61,14 @@ def load_frame2(cwiczenie):
 	elif cwiczenie=='RM':
 		cwiczenia="równania matematycznego"
 
-	page2_trudnosc.tkraise()
+	for widget in page2_trudnosc.winfo_children():
+		widget.destroy()
+		
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
+	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
+	button_wro=CTkButton(page2_trudnosc,image=wroc,text='Powrót do startu',command=load_frame1)
+	button_wro.place(relx=0.9, rely=0.02)
 
 
 	def dalej():
@@ -77,8 +84,6 @@ def load_frame2(cwiczenie):
 				load_frame6(poziom_trudnosci)
 		else:
 			komunikat_brak_wyboru.place(relx=0.5,rely=0.15, anchor='n')
-	
-
 
 	obrazek_latwy = Image.open("Icons/latwy.png")  
 	obrazek_latwy = obrazek_latwy.resize((125, 125), Image.BILINEAR)  
@@ -163,6 +168,10 @@ def wyniki(cwiczenie,poziom_trudnosci):
 
 def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
+	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
+	button_wro=CTkButton(page3_CzasReakcji,image=wroc,text='Powrót do startu',command=load_frame1)
+	button_wro.place(relx=0.9, rely=0.05)
+
 
 	czas_naZapamiętaine = 4 if poziom_trudnosci==1 else 3 if poziom_trudnosci==2 else 2
 	czas_pomiedzy_obrazkami= 3 if poziom_trudnosci==1 else 2 if poziom_trudnosci==2 else 0.75
@@ -231,6 +240,10 @@ def load_frame3(poziom_trudnosci):
 
 def load_frame4(poziom_trudnosci):
 	page4_TreningPamieci.tkraise()
+	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))	
+	button_wro=CTkButton(page4_TreningPamieci,image=wroc,text='Powrót do startu',command=load_frame1)
+	button_wro.place(relx=0.9, rely=0.05)
+
 
 	global czasCwiczenia #
 	czasCwiczenia = time.time()
@@ -349,6 +362,10 @@ def load_frame4(poziom_trudnosci):
 
 def load_frame5(poziom_trudnosci):
 	page5_KolejnoscAlfabetyczna.tkraise()
+	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
+	button_wro=CTkButton(page5_KolejnoscAlfabetyczna,image=wroc,text='Powrót do startu',command=load_frame1)
+	button_wro.place(relx=0.9, rely=0.05)
+
 
 	global czasCwiczenia #
 	czasCwiczenia = time.time()
@@ -361,7 +378,6 @@ def load_frame5(poziom_trudnosci):
 
 	info_jakieslowasa= CTkLabel(page5_KolejnoscAlfabetyczna,text='',font=('Arial',45))
 	info_jakieslowasa.place(relx=0.5,rely=0.15, anchor='n')
-
 
 	numery = []
 	listarozijana = []
@@ -419,6 +435,9 @@ def load_frame5(poziom_trudnosci):
 
 def load_frame6(poziom_trudnosci): 
 	page6_RownaniaMatematyczne.tkraise()
+	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
+	button_wro=CTkButton(page6_RownaniaMatematyczne,image=wroc,text='Powrót do startu',command=load_frame1)
+	button_wro.place(relx=0.9, rely=0.05)
 
 	global czasCwiczenia #
 	czasCwiczenia = time.time()
