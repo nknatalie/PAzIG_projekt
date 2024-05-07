@@ -145,16 +145,34 @@ def koniec(cwiczenie, poziom_trudnosci):
 	podaj_nick.bind("<FocusIn>", clear_entry)
 	podaj_nick.bind("<FocusOut>", refill_entry)
 	podaj_nick.place(relx=0.5, rely=0.45, relwidth=0.50, relheight=0.30, anchor='n')
+	nick=podaj_nick.get()
 
 	#podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	#podaj_nick.place(relx=0.5,rely=0.45,relwidth=0.50,relheight=0.30, anchor='n')
  
-	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci))
+	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci,nick,czasCwiczenia))
 	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
 
-	print(f'{cwiczenie}, {poziom_trudnosci}')
+	print(f'{cwiczenie}, {poziom_trudnosci}, {nick}')
+	# Wstawianie danych do tabeli
+	try:
+		#nick = podaj_nick
+		#avg_time = czasCwiczenia # Tworzenie zapytania SQL do wstawienia danych do tabeli
+		sql_query = f"INSERT INTO Tabela_Wynikow (Game_ID, Difficulty, Nick, Avg_time) VALUES (?, ?, ?, ?)" # tu trzeba pamaiętac aby dodwac wynik 
+        # Execute the SQL Query 
+		cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick, czasCwiczenia))
+        # Commit the transaction
+		conn.commit()
+		print("Dane zostały pomyślnie wstawione do bazy danych.")
+	except Exception as e:
+		print(f"Błąd podczas wstawiania danych do bazy danych: {str(e)}")
+		conn.rollback()
+	finally:
+        # Zamknięcie kursora i połączenia
+		cursor.close()
+		conn.close()
 
-def wyniki(cwiczenie,poziom_trudnosci):
+def wyniki(cwiczenie,poziom_trudnosci,podaj_nick,czasCwiczenia):
 	page8_wyniki.tkraise()
 	info_tabelawynikow=CTkLabel(page8_wyniki,text='Tabela wyników',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85)
 	info_tabelawynikow.place(relx=0.5,rely=0.05,anchor='n')
@@ -164,6 +182,7 @@ def wyniki(cwiczenie,poziom_trudnosci):
 	jeszczeRaz_button.place(relx=0.725,rely=0.9,anchor='s')
 	ramka_wyniki=CTkFrame(page8_wyniki,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_wyniki.place(relx=0.175,rely=0.15,relwidth=0.68,relheight=0.65)
+
 
 
 def load_frame3(poziom_trudnosci):
