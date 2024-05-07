@@ -63,7 +63,7 @@ def load_frame2(cwiczenie):
 
 	for widget in page2_trudnosc.winfo_children():
 		widget.destroy()
-		
+
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
@@ -168,6 +168,8 @@ def wyniki(cwiczenie,poziom_trudnosci):
 
 def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
+	for widget in page3_CzasReakcji.winfo_children():
+		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page3_CzasReakcji,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.05)
@@ -240,6 +242,8 @@ def load_frame3(poziom_trudnosci):
 
 def load_frame4(poziom_trudnosci):
 	page4_TreningPamieci.tkraise()
+	for widget in page4_TreningPamieci.winfo_children():
+		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))	
 	button_wro=CTkButton(page4_TreningPamieci,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.05)
@@ -362,12 +366,13 @@ def load_frame4(poziom_trudnosci):
 
 def load_frame5(poziom_trudnosci):
 	page5_KolejnoscAlfabetyczna.tkraise()
+	for widget in page5_KolejnoscAlfabetyczna.winfo_children():
+		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page5_KolejnoscAlfabetyczna,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.05)
 
-
-	global czasCwiczenia #
+	global czasCwiczenia 
 	czasCwiczenia = time.time()
 
 	liczba_rund=3 if poziom_trudnosci==1 else  4 if poziom_trudnosci==2 else 5 
@@ -396,25 +401,33 @@ def load_frame5(poziom_trudnosci):
 		start()
 
 	def sprawdz():
+		global SlowadoUlozenia
 		wybrane_slowa = [option_menu["text"] for option_menu in listarozijana]
 		posortowane_slowa = sorted(SlowadoUlozenia)
 		if wybrane_slowa == posortowane_slowa:
 			print("Kolejność poprawna!")
+			#listarozijana.clear()
+			start()
 			#nowa_runda()
 		else:
 			print("Błędna kolejność!")
-			listarozijana.clear()
+			#listarozijana.clear()
 			start()
 			#nowa_runda()
 
 	def start():
-		global czasCwiczenia
+		global czasCwiczenia, SlowadoUlozenia
 		nonlocal liczba_rund
 		liczba_rund -=1
 		if 0<= liczba_rund:
 			SlowadoUlozenia =random.sample(ListaSlow,liczba_slow)
 			slowa_string = ", ".join(SlowadoUlozenia) 
 			info_jakieslowasa.configure(text=slowa_string)
+			for menu in listarozijana:
+				menu.grid_forget()
+				menu.destroy()
+
+			listarozijana.clear()			
 			for i in range(liczba_slow):
 				numery.append(CTkLabel(page5_KolejnoscAlfabetyczna, text=str(i + 1), font=('Arial',55,'bold')))
 				numery[i].place(relx=0.1, rely=0.35 + 0.1 * i, anchor='center')
@@ -427,6 +440,7 @@ def load_frame5(poziom_trudnosci):
 			przycisk_dalej.configure(text='Koniec')
 			przycisk_dalej.configure(command=lambda: koniec ("KA", poziom_trudnosci))
 			
+					
 	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna,text='Dalej', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75,command=sprawdz)
 	przycisk_dalej.place(relx=0.9, rely=0.85,anchor='e')
 
@@ -435,6 +449,8 @@ def load_frame5(poziom_trudnosci):
 
 def load_frame6(poziom_trudnosci): 
 	page6_RownaniaMatematyczne.tkraise()
+	for widget in page6_RownaniaMatematyczne.winfo_children():
+		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page6_RownaniaMatematyczne,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.05)
@@ -492,17 +508,17 @@ def load_frame6(poziom_trudnosci):
 				obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
 				obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
 				info_o_wyniku.configure(image=obrazek_ok_dp)
-				liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
 			elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 				obrazek_nie_ok_dp=Image.open('zle.png')
 				obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
 				obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
-				info_o_wyniku.configure(image=obrazek_nie_ok_dp)	
-				liczba_rund=nastepna_runda(poziom_trudnosci,liczba_rund)
-
-	def nastepna_runda(poziom_trudnosci,liczba_rund):
+				info_o_wyniku.configure(image=obrazek_nie_ok_dp)
+			page6_RownaniaMatematyczne.after(1000,nastepna_runda)
+ 
+	def nastepna_runda():#poziom_trudnosci,liczba_rund):
 		global czasCwiczenia
-		nonlocal liczby,operatory,rownanie,wynik
+		nonlocal liczby,operatory,rownanie,wynik,liczba_rund
+		info_o_wyniku.configure(image='')
 		if liczba_rund >0:
 			liczba_rund -=1
 			if poziom_trudnosci==1:
@@ -533,6 +549,7 @@ def load_frame6(poziom_trudnosci):
 			przycisk_sprawdz_rownanie.configure(text='Sprawdź', command=sprawdz)
 		if liczba_rund==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
+			print(czasCwiczenia)
 			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("RM", poziom_trudnosci))
 		return liczba_rund
 
