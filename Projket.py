@@ -154,6 +154,7 @@ def koniec(cwiczenie, poziom_trudnosci):
 	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
 
 	print(f'{cwiczenie}, {poziom_trudnosci}, {nick}')
+	'''
 	# Wstawianie danych do tabeli
 	try:
 		#nick = podaj_nick
@@ -170,10 +171,14 @@ def koniec(cwiczenie, poziom_trudnosci):
 	finally:
         # Zamknięcie kursora i połączenia
 		cursor.close()
-		conn.close()
+		conn.close()	
+	
+	'''
+
 
 def wyniki(cwiczenie,poziom_trudnosci,podaj_nick,czasCwiczenia):
 	page8_wyniki.tkraise()
+	print(podaj_nick)
 	info_tabelawynikow=CTkLabel(page8_wyniki,text='Tabela wyników',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85)
 	info_tabelawynikow.place(relx=0.5,rely=0.05,anchor='n')
 	PowrotStart_button=CTkButton(page8_wyniki,text='  Wróć do menu  ',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=load_frame1)
