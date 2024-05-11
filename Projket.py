@@ -13,6 +13,7 @@ czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
 
+'''
 DRIVER_NAME='SQL SERVER'
 SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'
 DARABASE_NAME='Pazig'
@@ -26,7 +27,7 @@ connection_string=f"""
 conn=pyodbc.connect(connection_string)
 cursor=conn.cursor()
 print(conn)
-
+'''
 
 def load_frame1():
 	page1_start.tkraise()
@@ -126,7 +127,8 @@ def koniec(cwiczenie, poziom_trudnosci):
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: {czasCwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75) #tu trzeba zrobić f' {ile ten wynik wynosi}'
+	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: {czasCwiczenia}{wynikKoncowy}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75) #tu trzeba zrobić f' {ile ten wynik wynosi}'
+	print(wynikKoncowy)
 	napis_TwojWynik.place(relx=0.5,rely=0.1,relwidth=0.35,relheight=0.15, anchor='n')
 
 	info_podajNIck= CTkLabel(ramka_koniec,text='Proszę podaj nick!',font=('Arial',60,'bold'))
@@ -273,6 +275,11 @@ def load_frame4(poziom_trudnosci):
 
 
 	global czasCwiczenia #
+	global wynikKoncowy
+	global punkty
+	punkty = 0
+	wynikKoncowy = 0
+	
 	czasCwiczenia = time.time()
 
 	liczba_rund=3 if poziom_trudnosci==1 else  5 if poziom_trudnosci==2 else 8 
@@ -328,12 +335,16 @@ def load_frame4(poziom_trudnosci):
 			info_niepoprawniezaznaczone.configure(text='Zaznacz wszystko')
 			info_niepoprawniezaznaczone.place(relx=0.5,rely=0.15,anchor='n') # to mozna gdzies indziej przenieść
 			return
+		global punkty
+		punkty += sum(tabZgodnisci)
+		print(tabZgodnisci, punkty)
 		nowarunda()
 
 		return tabZgodnisci
 	
 	def start_rundy():
 		global czasCwiczenia
+		global wynikKoncowy
 		nonlocal liczba_rund
 		if 0<=liczba_rund:
 			tablica=[] 
@@ -381,6 +392,8 @@ def load_frame4(poziom_trudnosci):
 			button_dalej.configure(command= lambda: sprawdz(tablica2,tablica,comboboxy))
 		else:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2) #tu trzeba bedzie odjąć czas który się odlicza
+			wynikKoncowy = punkty * 50 + round((60 - czasCwiczenia) * 50)
+			print(czasCwiczenia, punkty, wynikKoncowy)
 			button_dalej.place(relx=0.5,rely=0.90, anchor='s')
 			button_dalej.configure(text='Koniec')
 			button_dalej.configure(command=lambda: koniec ("TP", poziom_trudnosci))
@@ -396,6 +409,10 @@ def load_frame5(poziom_trudnosci):
 	button_wro.place(relx=0.9, rely=0.05)
 
 	global czasCwiczenia 
+	global wynikKoncowy
+	global punkty
+	punkty = 0
+	wynikKoncowy = 0
 	czasCwiczenia = time.time()
 
 	liczba_rund=3 if poziom_trudnosci==1 else  4 if poziom_trudnosci==2 else 5 
@@ -430,10 +447,21 @@ def load_frame5(poziom_trudnosci):
 		if wybrane_slowa == posortowane_slowa:
 			print("Kolejność poprawna!")
 			#listarozijana.clear()
+			global punkty
+			punkty += len(wybrane_slowa)
+			print(punkty)
 			start()
 			#nowa_runda()
 		else:
 			print("Błędna kolejność!")
+			checkTab = []
+			for el in range(len(wybrane_slowa)):
+				if wybrane_slowa[el] == posortowane_slowa[el]:
+					checkTab.append(1)
+				else:
+					checkTab.append(0)
+			punkty += sum(checkTab)
+			print(punkty)
 			#listarozijana.clear()
 			start()
 			#nowa_runda()
@@ -460,9 +488,12 @@ def load_frame5(poziom_trudnosci):
 				listarozijana[i].place(relx=0.25, rely=0.35 + 0.1 * i, anchor='center')
 		if liczba_rund ==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
+			global wynikKoncowy
+			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
+			print(czasCwiczenia, punkty, wynikKoncowy)
 			przycisk_dalej.configure(text='Koniec')
 			przycisk_dalej.configure(command=lambda: koniec ("KA", poziom_trudnosci))
-			
+		
 					
 	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna,text='Dalej', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75,command=sprawdz)
 	przycisk_dalej.place(relx=0.9, rely=0.85,anchor='e')
@@ -479,6 +510,10 @@ def load_frame6(poziom_trudnosci):
 	button_wro.place(relx=0.9, rely=0.05)
 
 	global czasCwiczenia #
+	global wynikKoncowy
+	global punkty
+	punkty = 0
+	wynikKoncowy = 0
 	czasCwiczenia = time.time()
 
 	info_rozwiazRownanie=CTkLabel(page6_RownaniaMatematyczne,text='Rozwiąż równanie!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
@@ -531,6 +566,9 @@ def load_frame6(poziom_trudnosci):
 				obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
 				obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
 				info_o_wyniku.configure(image=obrazek_ok_dp)
+				global punkty
+				punkty += 1
+				print(punkty)
 			elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 				obrazek_nie_ok_dp=Image.open('zle.png')
 				obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
@@ -572,7 +610,9 @@ def load_frame6(poziom_trudnosci):
 			przycisk_sprawdz_rownanie.configure(text='Sprawdź', command=sprawdz)
 		if liczba_rund==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
-			print(czasCwiczenia)
+			global wynikKoncowy
+			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
+			print(czasCwiczenia, punkty, wynikKoncowy)
 			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("RM", poziom_trudnosci))
 		return liczba_rund
 
