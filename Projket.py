@@ -13,7 +13,7 @@ czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
 
-'''
+
 DRIVER_NAME='SQL SERVER'
 SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'
 DARABASE_NAME='Pazig'
@@ -27,31 +27,54 @@ connection_string=f"""
 conn=pyodbc.connect(connection_string)
 cursor=conn.cursor()
 print(conn)
-'''
+
 
 def load_frame1():
 	page1_start.tkraise()
 	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#5E7FA6')
 	ramka_start.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
+	obrazek_CR = ImageTk.PhotoImage(Image.open(f"wybor\CR.png").resize((75, 75), Image.BILINEAR))
+	obrazek_TP = ImageTk.PhotoImage(Image.open(f"wybor\TP.png").resize((75, 75), Image.BILINEAR))
+	obrazek_KA = ImageTk.PhotoImage(Image.open(f"wybor\KA.png").resize((75, 75), Image.BILINEAR))
+	obrazek_RM = ImageTk.PhotoImage(Image.open(f"wybor\RM.png").resize((75, 75), Image.BILINEAR))
+
 	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
 
-	wybor_CzasReakcji= CTkButton(ramka_start, text="         Czas reakcji        ",  command=lambda: load_frame2("CR"), font=('Arial',30),corner_radius=32,width=300, height=100) 
+	wybor_CzasReakcji= CTkButton(ramka_start, text="         Czas reakcji        ",image=obrazek_CR, command=lambda: load_frame2("CR"), font=('Arial',30),corner_radius=32,width=300, height=100) 
 	wybor_CzasReakcji.place(relx=0.15,rely=0.35,anchor='w')
 
-	wybor_TreningPamieci=CTkButton(ramka_start,text="        Trening pamięci        ",command= lambda: load_frame2("TP"),font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_TreningPamieci=CTkButton(ramka_start,text="        Trening pamięci        ",image=obrazek_TP, command= lambda: load_frame2("TP"),font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_TreningPamieci.place(relx=0.85, rely=0.35, anchor='e')
 
-	wybor_KolejnoscMatematyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",command=lambda:load_frame2("KA"), font=('Arial',30),corner_radius=32,width=300, height=100)
-	wybor_KolejnoscMatematyczna.place(relx=0.15, rely=0.70, anchor='w')
+	wybor_KolejnoscAlfabetyczna= CTkButton(ramka_start, text="Kolejność alfabetyczna",image=obrazek_KA,command=lambda:load_frame2("KA"), font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_KolejnoscAlfabetyczna.place(relx=0.15, rely=0.70, anchor='w')
 
-	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne ",command=lambda:load_frame2("RM"), font=('Arial',30),corner_radius=32,width=300, height=100)
+	wybor_RownanieMatematyczne= CTkButton(ramka_start, text="Równanie matematyczne ",image=obrazek_RM,command=lambda:load_frame2("RM"), font=('Arial',30),corner_radius=32,width=300, height=100)
 	wybor_RownanieMatematyczne.place(relx=0.85, rely=0.70, anchor='e')
 
 
 def load_frame2(cwiczenie):
 	page2_trudnosc.tkraise()
+
+	for widget in page2_trudnosc.winfo_children():
+		widget.destroy()	
+
+	def show_info(cwiczenie):
+		info_window = CTkToplevel(root)
+		info_window.grab_set()
+		info_window.title("Informacja")
+		info_window.geometry('400x400')
+		info_window.resizable(FALSE,FALSE) #width,height
+		info_text=CTkLabel(info_window,font=('Arial',60))
+		info_text.place(relx=0,rely=0)
+		info_file=f'Informacja/{cwiczenie}.txt'
+		
+		with open(info_file,'r') as file:
+			zawartosc=file.read()
+			info_text.configure(text=zawartosc)
+		
 	
 	if cwiczenie == 'CR':
 		cwiczenia='czasu reakcji'
@@ -62,14 +85,15 @@ def load_frame2(cwiczenie):
 	elif cwiczenie=='RM':
 		cwiczenia="równania matematycznego"
 
-	for widget in page2_trudnosc.winfo_children():
-		widget.destroy()
+
 
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page2_trudnosc,image=wroc,text='Powrót do startu',command=load_frame1)
-	button_wro.place(relx=0.9, rely=0.02)
+	button_wro.place(relx=0.9, rely=0.015)
+	info_button=CTkButton(page2_trudnosc,text="Informacja", command=lambda: show_info(cwiczenie))
+	info_button.place(relx=0.025,rely=0.025,anchor='w')
 
 
 	def dalej():
@@ -122,7 +146,7 @@ def load_frame2(cwiczenie):
 	komunikat_brak_wyboru.forget()
 
 
-def koniec(cwiczenie, poziom_trudnosci):
+def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy):
 	page7_koniec.tkraise()
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
@@ -152,7 +176,7 @@ def koniec(cwiczenie, poziom_trudnosci):
 	#podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	#podaj_nick.place(relx=0.5,rely=0.45,relwidth=0.50,relheight=0.30, anchor='n')
  
-	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci,nick,czasCwiczenia))
+	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
 	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
 
 	print(f'{cwiczenie}, {poziom_trudnosci}, {nick}')
@@ -396,7 +420,7 @@ def load_frame4(poziom_trudnosci):
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			button_dalej.place(relx=0.5,rely=0.90, anchor='s')
 			button_dalej.configure(text='Koniec')
-			button_dalej.configure(command=lambda: koniec ("TP", poziom_trudnosci))
+			button_dalej.configure(command=lambda: koniec ("TP", poziom_trudnosci,wynikKoncowy))
 
 	start_rundy()
 
@@ -492,7 +516,7 @@ def load_frame5(poziom_trudnosci):
 			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			przycisk_dalej.configure(text='Koniec')
-			przycisk_dalej.configure(command=lambda: koniec ("KA", poziom_trudnosci))
+			przycisk_dalej.configure(command=lambda: koniec ("KA", poziom_trudnosci,wynikKoncowy))
 		
 					
 	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna,text='Dalej', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75,command=sprawdz)
@@ -613,7 +637,7 @@ def load_frame6(poziom_trudnosci):
 			global wynikKoncowy
 			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
 			print(czasCwiczenia, punkty, wynikKoncowy)
-			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("RM", poziom_trudnosci))
+			przycisk_sprawdz_rownanie.configure(text='Koniec', command=lambda: koniec ("RM", poziom_trudnosci,wynikKoncowy))
 		return liczba_rund
 
 
