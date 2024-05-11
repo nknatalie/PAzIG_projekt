@@ -163,54 +163,73 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 			podaj_nick.insert(0, 'Podaj nick!')
 
 	podaj_nick = CTkEntry(ramka_koniec, font=('Arial', 60), corner_radius=32, width=250, height=75)
-	#podaj_nick.insert(0, 'Podaj nick!')
-	#podaj_nick.bind("<FocusIn>", clear_entry)
-	#podaj_nick.bind("<FocusOut>", refill_entry)
-	#podaj_nick.place(relx=0.5, rely=0.45, relwidth=0.50, relheight=0.30, anchor='n')
-	nick=podaj_nick.get()
+	podaj_nick.insert(0, 'Podaj nick!')
+	podaj_nick.bind("<FocusIn>", clear_entry)
+	podaj_nick.bind("<FocusOut>", refill_entry)
+	podaj_nick.place(relx=0.5, rely=0.45, relwidth=0.50, relheight=0.30, anchor='n')
 
-	#podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
-	#podaj_nick.place(relx=0.5,rely=0.45,relwidth=0.50,relheight=0.30, anchor='n')
- 
-	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command=lambda: wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
+	def dalej():
+		nick=podaj_nick.get()
+		if nick != 'Podaj nick!' and nick !='':
+			print(f'{cwiczenie}, {poziom_trudnosci}, {nick}')
+	
+			try:
+				sql_query = f"INSERT INTO Tabela_Wynikow (Game_ID, Difficulty, Nick, Wynik, Avg_time) VALUES (?, ?, ?, ?, ?)" 
+				# Execute the SQL Query 
+				cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
+				# Commit the transaction
+				conn.commit()
+				print("Dane zostały pomyślnie wstawione do bazy danych.")
+				wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia)
+			except Exception as e:
+				print(f"Błąd podczas wstawiania danych do bazy danych: {str(e)}")
+				conn.rollback()
+			'''
+			finally:
+					# Zamknięcie kursora i połączenia
+					cursor.close()
+					conn.close()			
+			'''					
+			
+	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command= dalej)#lambda: wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
 	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
 
-	print(f'{cwiczenie}, {poziom_trudnosci}, {nick}')
-	'''
-	# Wstawianie danych do tabeli
-	try:
-		#nick = podaj_nick
-		#avg_time = czasCwiczenia # Tworzenie zapytania SQL do wstawienia danych do tabeli
-		sql_query = f"INSERT INTO Tabela_Wynikow (Game_ID, Difficulty, Nick, Avg_time) VALUES (?, ?, ?, ?)" # tu trzeba pamaiętac aby dodwac wynik 
-        # Execute the SQL Query 
-		cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick, czasCwiczenia))
-        # Commit the transaction
-		conn.commit()
-		print("Dane zostały pomyślnie wstawione do bazy danych.")
-	except Exception as e:
-		print(f"Błąd podczas wstawiania danych do bazy danych: {str(e)}")
-		conn.rollback()
-	finally:
-        # Zamknięcie kursora i połączenia
-		cursor.close()
-		conn.close()	
-	
-	'''
 
-
-def wyniki(cwiczenie,poziom_trudnosci,podaj_nick,wynikKoncowy,czasCwiczenia):
+def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 	page8_wyniki.tkraise()
-	print(podaj_nick)
+	
 	info_tabelawynikow=CTkLabel(page8_wyniki,text='Tabela wyników',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85)
 	info_tabelawynikow.place(relx=0.5,rely=0.05,anchor='n')
 	PowrotStart_button=CTkButton(page8_wyniki,text='  Wróć do menu  ',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=load_frame1)
 	PowrotStart_button.place(relx=0.3,rely=0.9,anchor='s')
 	jeszczeRaz_button=CTkButton(page8_wyniki,text='Zagraj jeszcze raz',font=('Arial',50,'bold'),corner_radius=32,width=250, height=75,command=lambda:load_frame2(cwiczenie))
 	jeszczeRaz_button.place(relx=0.725,rely=0.9,anchor='s')
+
 	ramka_wyniki=CTkFrame(page8_wyniki,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_wyniki.place(relx=0.175,rely=0.15,relwidth=0.68,relheight=0.65)
+	ramka_prostokat = CTkFrame(ramka_wyniki, corner_radius=0, bg_color='white')
+	ramka_prostokat.place(relx=0.04, rely=0.06, relwidth=0.92, relheight=0.87)
 
 
+	sql_query = f"SELECT TOP 10 Nick, Wynik FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik DESC"
+	cursor=conn.cursor()
+	cursor.execute(sql_query, (cwiczenie, poziom_trudnosci))
+	wyniki = cursor.fetchall()
+
+	for i, (nick, wynik) in enumerate(wyniki, start=1):
+		label_numer = CTkLabel(ramka_prostokat, text=f"{i}.", font=('Arial', 40), width=50, height=50)
+		label_numer.place(relx=0.15, rely=0.05 + i * 0.1, anchor='w')
+        
+		label_nick = CTkLabel(ramka_prostokat, text=f"{nick}", font=('Arial', 40), width=300, height=50)
+		label_nick.place(relx=0.3, rely=0.05 + i * 0.1, anchor='w')
+        
+		label_wynik = CTkLabel(ramka_prostokat, text=f"{wynik}", font=('Arial', 40), width=200, height=50)
+		label_wynik.place(relx=0.7, rely=0.05 + i * 0.1, anchor='w')
+
+	#cursor.close()
+	#conn.close()	
+	
+	
 
 def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
