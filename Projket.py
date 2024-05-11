@@ -229,7 +229,6 @@ def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 	#cursor.close()
 	#conn.close()	
 	
-	
 
 def load_frame3(poziom_trudnosci):
 	page3_CzasReakcji.tkraise()
@@ -239,92 +238,34 @@ def load_frame3(poziom_trudnosci):
 	button_wro=CTkButton(page3_CzasReakcji,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.05)
 
-
 	czas_naZapamiętaine = 4 if poziom_trudnosci==1 else 3 if poziom_trudnosci==2 else 2
-	#czas_pomiedzy_obrazkami= 3 if poziom_trudnosci==1 else 2 if poziom_trudnosci==2 else 0.75
 	liczba_rund=5
 
-	#info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
-	#info_zapamietajObiekt.place(relx=0.5,rely=0.05,anchor='n')
-	mierzy_czas=CTkLabel(page3_CzasReakcji,text='',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
-	mierzy_czas.place(relx=0.5,rely=0.90, anchor='s')
 	wyswietla_obrazki=CTkLabel(page3_CzasReakcji, text='')
 	wyswietla_obrazki.place(relx=0.5, rely=0.6, anchor='s')
 	info_kliknijspace=CTkLabel(page3_CzasReakcji, text='Kliknij w spacje',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 
-	def sprawdz():
-		wyswietla_obrazki.configure(image='')
-		#info_zapamietajObiekt.configure(text='Zapamiętaj obiekt')
-		mierzy_czas.place(relx=0.5,rely=0.90, anchor='s')
-
-		start()
-
 	def start():
-		nonlocal liczba_rund, czas_naZapamiętaine #, czas_pomiedzy_obrazkami
+		nonlocal liczba_rund, czas_naZapamiętaine 
 		#while liczba_rund>0:
 		for i in range (liczba_rund):
 			isPressed=0
 			czas=time.perf_counter()
-
-			#liczba_rund -=1 # na razie są 4 rundy
-		#if 0<= liczba_rund:
-			#x = random.randrange(1, 10)
 			obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{1}.png").resize((300, 300), Image.BILINEAR))
 			wyswietla_obrazki.configure(image=obrazek)	
-			#pozostaly_czas-czas_naZapamiętaine
 
-			#while time.perf_counter()-czas<czas_naZapamiętaine:
-			#	pozostaly_czas=int(czas_naZapamiętaine-(time.perf_counter()-czas))
-			#	mierzy_czas.configure(text=f'{pozostaly_czas}')
-
-
-			#start_time=time.perf_counter()
 			if time.perf_counter()-czas>=czas_naZapamiętaine:
-
-				mierzy_czas.place_forget()
 				wyswietla_obrazki.configure(image='')
 				info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
 				czasStart=time.perf_counter()
-				obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
-				wyswietla_obrazki.configure(image=obrazek)
+				obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
+				wyswietla_obrazki.configure(image=obrazek2)
 				while(isPressed==0):
 					if keyboard.is_pressed("space"):
 						isPressed=1
 						wynik=czasStart-time.perf_counter()
 						time.sleep(1)
 			#wyniki.append(wynik)
-			'''
-			while time.perf_counter()-start_time<czas_naZapamiętaine:
-				pozostaly_czas=int(czas_naZapamiętaine-(time.perf_counter()-start_time))
-				mierzy_czas.configure(text=f'{pozostaly_czas}')
-
-				if keyboard.is_pressed("space"):
-					print("kliknieto spacje") 
-					sprawdz()  
-				
-				page3_CzasReakcji.update()
-				
-			mierzy_czas.place_forget()
-			wyswietla_obrazki.configure(image='')
-			
-			#info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
-			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-
-			i=random.randint(1,10)
-			obrazek_2 = Image.open(f"Czasreakcji/{i}.png")
-			obrazek_2 = obrazek_2.resize((300, 300), Image.BILINEAR)
-			obrazek_2 = ImageTk.PhotoImage(obrazek_2)
-			wyswietla_obrazki.configure(image=obrazek_2)
-			wyswietla_obrazki.update()				
-
-					#break	  
- 
-			#time.sleep(czas_pomiedzy_obrazkami)
-			#page3_CzasReakcji.update() 
-			liczba_rund -=1				
-		#return x			
-			
-			'''
 
 	start()
 	#wynikKoncowy=sum(wyniki)/len(wyniki)
