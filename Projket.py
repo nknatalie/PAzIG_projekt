@@ -3,10 +3,7 @@ from PIL import Image, ImageTk
 from customtkinter import *
 import random
 import time
-#import os
-# from pynput.keyboard import Key, Controller
 import keyboard
-#import timer
 import pyodbc
 
 czasCwiczenia = 0.0
@@ -225,11 +222,11 @@ def load_frame3(poziom_trudnosci):
 
 
 	czas_naZapamiętaine = 4 if poziom_trudnosci==1 else 3 if poziom_trudnosci==2 else 2
-	czas_pomiedzy_obrazkami= 3 if poziom_trudnosci==1 else 2 if poziom_trudnosci==2 else 0.75
+	#czas_pomiedzy_obrazkami= 3 if poziom_trudnosci==1 else 2 if poziom_trudnosci==2 else 0.75
 	liczba_rund=5
 
-	info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
-	info_zapamietajObiekt.place(relx=0.5,rely=0.05,anchor='n')
+	#info_zapamietajObiekt=CTkLabel(page3_CzasReakcji,text='Zapamiętaj obiekt!',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75 )
+	#info_zapamietajObiekt.place(relx=0.5,rely=0.05,anchor='n')
 	mierzy_czas=CTkLabel(page3_CzasReakcji,text='',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 	mierzy_czas.place(relx=0.5,rely=0.90, anchor='s')
 	wyswietla_obrazki=CTkLabel(page3_CzasReakcji, text='')
@@ -238,23 +235,46 @@ def load_frame3(poziom_trudnosci):
 
 	def sprawdz():
 		wyswietla_obrazki.configure(image='')
-		info_zapamietajObiekt.configure(text='Zapamiętaj obiekt')
+		#info_zapamietajObiekt.configure(text='Zapamiętaj obiekt')
 		mierzy_czas.place(relx=0.5,rely=0.90, anchor='s')
 
 		start()
 
 	def start():
-		nonlocal liczba_rund, czas_naZapamiętaine, czas_pomiedzy_obrazkami
-		while liczba_rund>0:
+		nonlocal liczba_rund, czas_naZapamiętaine #, czas_pomiedzy_obrazkami
+		#while liczba_rund>0:
+		for i in range (liczba_rund):
+			isPressed=0
+			czas=time.perf_counter()
+
 			#liczba_rund -=1 # na razie są 4 rundy
 		#if 0<= liczba_rund:
-			x = random.randrange(1, 10)
-			obrazek = Image.open(f"Czasreakcji\{x}.png")
-			obrazek = obrazek.resize((300, 300), Image.BILINEAR)
-			obrazek = ImageTk.PhotoImage(obrazek)
+			#x = random.randrange(1, 10)
+			obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{1}.png").resize((300, 300), Image.BILINEAR))
 			wyswietla_obrazki.configure(image=obrazek)	
-			
-			start_time=time.perf_counter()
+			#pozostaly_czas-czas_naZapamiętaine
+
+			#while time.perf_counter()-czas<czas_naZapamiętaine:
+			#	pozostaly_czas=int(czas_naZapamiętaine-(time.perf_counter()-czas))
+			#	mierzy_czas.configure(text=f'{pozostaly_czas}')
+
+
+			#start_time=time.perf_counter()
+			if time.perf_counter()-czas>=czas_naZapamiętaine:
+
+				mierzy_czas.place_forget()
+				wyswietla_obrazki.configure(image='')
+				info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
+				czasStart=time.perf_counter()
+				obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
+				wyswietla_obrazki.configure(image=obrazek)
+				while(isPressed==0):
+					if keyboard.is_pressed("space"):
+						isPressed=1
+						wynik=czasStart-time.perf_counter()
+						time.sleep(1)
+			#wyniki.append(wynik)
+			'''
 			while time.perf_counter()-start_time<czas_naZapamiętaine:
 				pozostaly_czas=int(czas_naZapamiętaine-(time.perf_counter()-start_time))
 				mierzy_czas.configure(text=f'{pozostaly_czas}')
@@ -268,7 +288,7 @@ def load_frame3(poziom_trudnosci):
 			mierzy_czas.place_forget()
 			wyswietla_obrazki.configure(image='')
 			
-			info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
+			#info_zapamietajObiekt.configure(text='Wybierz poprawny obrazek')
 			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
 
 			i=random.randint(1,10)
@@ -283,9 +303,12 @@ def load_frame3(poziom_trudnosci):
 			#time.sleep(czas_pomiedzy_obrazkami)
 			#page3_CzasReakcji.update() 
 			liczba_rund -=1				
-		return x
-		
+		#return x			
+			
+			'''
+
 	start()
+	#wynikKoncowy=sum(wyniki)/len(wyniki)
 
 
 def load_frame4(poziom_trudnosci):
@@ -375,9 +398,7 @@ def load_frame4(poziom_trudnosci):
 				x = random.randrange(1, 10) # TU TRZEBA PAMIĘTAĆ, DRUGI PARAMETR POWINNIEN MIEĆ TAKA SAMĄ WARTOŚĆ ILE JEST OBRAZKÓW W FOLDERZE
 				if x not in tablica:
 					tablica.append(x)
-					obrazek = Image.open(f"Treningpamieci\{x}.png")
-					obrazek = obrazek.resize((300, 300), Image.BILINEAR)
-					obrazek = ImageTk.PhotoImage(obrazek)
+					obrazek = ImageTk.PhotoImage(Image.open(f"Treningpamieci\{x}.png").resize((300, 300), Image.BILINEAR))
 					obrazki[len(tablica) - 1].configure(image=obrazek)  
 					obrazki[len(tablica) - 1].place(relx=len(tablica)  / (liczba_obrazkow + 1), rely=0.40, anchor='center')
 					#print(tablica[len(tablica) - 1]) 
@@ -395,9 +416,7 @@ def load_frame4(poziom_trudnosci):
 					#print(tablica)
 
 			for i,x in enumerate(tablica):
-				obrazek = Image.open(f"Treningpamieci\{x}.png")
-				obrazek = obrazek.resize((300, 300), Image.BILINEAR)
-				obrazek = ImageTk.PhotoImage(obrazek)
+				obrazek = ImageTk.PhotoImage(Image.open(f"Treningpamieci\{x}.png").resize((300, 300), Image.BILINEAR))
 				obrazki[i].configure(image=obrazek)  
 				obrazki[i].place(relx=(i + 1) / (liczba_obrazkow + 1), rely=0.40, anchor='center')
 				#print(tablica[i])
@@ -586,17 +605,13 @@ def load_frame6(poziom_trudnosci):
 		wpisany_wynik=podaj_Wynik.get().strip()
 		if wpisany_wynik.isdigit():
 			if wpisany_wynik==str(wynik):
-				obrazek_ok_dp=Image.open('ok.png')
-				obrazek_ok_dp=obrazek_ok_dp.resize((75,75),Image.BILINEAR)
-				obrazek_ok_dp=ImageTk.PhotoImage(obrazek_ok_dp)
+				obrazek_ok_dp=ImageTk.PhotoImage(Image.open('ok.png').resize((75,75),Image.BILINEAR))
 				info_o_wyniku.configure(image=obrazek_ok_dp)
 				global punkty
 				punkty += 1
 				print(punkty)
 			elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
-				obrazek_nie_ok_dp=Image.open('zle.png')
-				obrazek_nie_ok_dp=obrazek_nie_ok_dp.resize((100,100),Image.BILINEAR)
-				obrazek_nie_ok_dp=ImageTk.PhotoImage(obrazek_nie_ok_dp)
+				obrazek_nie_ok_dp=ImageTk.PhotoImage(Image.open('zle.png').resize((100,100),Image.BILINEAR))
 				info_o_wyniku.configure(image=obrazek_nie_ok_dp)
 		if liczba_rund>0:
 			page6_RownaniaMatematyczne.after(1000,nastepna_runda)
