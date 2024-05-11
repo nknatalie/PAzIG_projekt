@@ -253,7 +253,6 @@ def load_frame3(poziom_trudnosci):
 			wyswietla_obrazki.configure(image=obrazek_2)
 			wyswietla_obrazki.update()				
 
-
 					#break	  
  
 			#time.sleep(czas_pomiedzy_obrazkami)
