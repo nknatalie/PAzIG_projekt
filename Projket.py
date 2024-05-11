@@ -86,7 +86,6 @@ def load_frame2(cwiczenie):
 		cwiczenia="równania matematycznego"
 
 
-
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
@@ -151,9 +150,9 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy):
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: {czasCwiczenia}{wynikKoncowy}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75) #tu trzeba zrobić f' {ile ten wynik wynosi}'
+	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia} \n wynik końcowy:{wynikKoncowy}',fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100) #tu trzeba zrobić f' {ile ten wynik wynosi}'
 	print(wynikKoncowy)
-	napis_TwojWynik.place(relx=0.5,rely=0.1,relwidth=0.35,relheight=0.15, anchor='n')
+	napis_TwojWynik.place(relx=0.5,rely=0.05, anchor='n')
 
 	info_podajNIck= CTkLabel(ramka_koniec,text='Proszę podaj nick!',font=('Arial',60,'bold'))
 	info_podajNIck.place(relx=0.5,rely=0.3,anchor='n')
@@ -167,10 +166,10 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy):
 			podaj_nick.insert(0, 'Podaj nick!')
 
 	podaj_nick = CTkEntry(ramka_koniec, font=('Arial', 60), corner_radius=32, width=250, height=75)
-	podaj_nick.insert(0, 'Podaj nick!')
-	podaj_nick.bind("<FocusIn>", clear_entry)
-	podaj_nick.bind("<FocusOut>", refill_entry)
-	podaj_nick.place(relx=0.5, rely=0.45, relwidth=0.50, relheight=0.30, anchor='n')
+	#podaj_nick.insert(0, 'Podaj nick!')
+	#podaj_nick.bind("<FocusIn>", clear_entry)
+	#podaj_nick.bind("<FocusOut>", refill_entry)
+	#podaj_nick.place(relx=0.5, rely=0.45, relwidth=0.50, relheight=0.30, anchor='n')
 	nick=podaj_nick.get()
 
 	#podaj_nick=CTkEntry(ramka_koniec, fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
