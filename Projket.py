@@ -238,6 +238,11 @@ def load_frame3(poziom_trudnosci):
 	button_wro=CTkButton(page3_CzasReakcji,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.05)
 
+	global punkty 
+	global wynikKoncowy
+	wynikKoncowy=0
+	punkty =0
+	czasCwiczenia
 	czas_naZapamiętaine = 4 if poziom_trudnosci==1 else 3 if poziom_trudnosci==2 else 2
 	liczba_rund=5
 
@@ -245,29 +250,62 @@ def load_frame3(poziom_trudnosci):
 	wyswietla_obrazki.place(relx=0.5, rely=0.6, anchor='s')
 	info_kliknijspace=CTkLabel(page3_CzasReakcji, text='Kliknij w spacje',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 
-	def start():
-		nonlocal liczba_rund, czas_naZapamiętaine 
+	def start(liczba_rund):
+		global punkty
+		nonlocal czas_naZapamiętaine 
 		#while liczba_rund>0:
-		for i in range (liczba_rund):
+		if liczba_rund>=0:
+		#for i in range (liczba_rund):
+			info_kliknijspace.place_forget()
 			isPressed=0
 			czas=time.perf_counter()
 			obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{1}.png").resize((300, 300), Image.BILINEAR))
-			wyswietla_obrazki.configure(image=obrazek)	
+			wyswietla_obrazki.configure(image=obrazek)
 
-			if time.perf_counter()-czas>=czas_naZapamiętaine:
+			
+			def pdo():
 				wyswietla_obrazki.configure(image='')
 				info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
 				czasStart=time.perf_counter()
 				obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
 				wyswietla_obrazki.configure(image=obrazek2)
-				while(isPressed==0):
-					if keyboard.is_pressed("space"):
-						isPressed=1
-						wynik=czasStart-time.perf_counter()
-						time.sleep(1)
+
+                # Sprawdź, czy klawisz "spacja" został naciśnięty w funkcji start()
+				def check_space(event):
+					global punkty
+					nonlocal czasStart, liczba_rund
+					if event.name == 'space':
+						print('ok')
+						wynik = czasStart - time.perf_counter()
+						#liczba_rund -= 1 
+						punkty =+1 # Odejmujemy 1 od liczby rund
+						start(liczba_rund-1)  # Rozpoczynamy kolejną rundę
+
+                # Rejestrujemy funkcję check_space() jako funkcję obsługującą zdarzenia klawiatury
+				keyboard.hook(check_space)
+
+			page3_CzasReakcji.after(czas_naZapamiętaine*1000,pdo)
+		else: 
+			wynikKoncowy=punkty
+			#wyniki.append(wynik)
+			print(f"CR, {poziom_trudnosci, wynikKoncowy, czasCwiczenia}")
+			koniec('CR',poziom_trudnosci,wynikKoncowy,czasCwiczenia)
+		
+
+			#if time.perf_counter()-czas>=czas_naZapamiętaine:
+			#	wyswietla_obrazki.configure(image='')
+			#	info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
+			#	czasStart=time.perf_counter()
+			#	obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
+			#	wyswietla_obrazki.configure(image=obrazek2)
+			#	while(isPressed==0):
+			#		if keyboard.is_pressed("space"):
+			#			isPressed=1
+			#			wynik=czasStart-time.perf_counter()
+			#			time.sleep(1)
 			#wyniki.append(wynik)
 
-	start()
+	start(liczba_rund)
 	#wynikKoncowy=sum(wyniki)/len(wyniki)
 
 
