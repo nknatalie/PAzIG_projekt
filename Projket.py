@@ -10,7 +10,7 @@ czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
 
-
+'''
 DRIVER_NAME='SQL SERVER'
 SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'
 DARABASE_NAME='Pazig'
@@ -24,7 +24,7 @@ connection_string=f"""
 conn=pyodbc.connect(connection_string)
 cursor=conn.cursor()
 print(conn)
-
+'''
 
 def load_frame1():
 	page1_start.tkraise()
@@ -176,14 +176,14 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 			try:
 				sql_query = f"INSERT INTO Tabela_Wynikow (Game_ID, Difficulty, Nick, Wynik, Avg_time) VALUES (?, ?, ?, ?, ?)" 
 				# Execute the SQL Query 
-				cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
+				#cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
 				# Commit the transaction
-				conn.commit()
+				#conn.commit()
 				print("Dane zostały pomyślnie wstawione do bazy danych.")
 				wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia)
 			except Exception as e:
 				print(f"Błąd podczas wstawiania danych do bazy danych: {str(e)}")
-				conn.rollback()
+				#conn.rollback()
 			'''
 			finally:
 					# Zamknięcie kursora i połączenia
@@ -212,9 +212,9 @@ def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 
 
 	sql_query = f"SELECT TOP 10 Nick, Wynik FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik DESC"
-	cursor=conn.cursor()
-	cursor.execute(sql_query, (cwiczenie, poziom_trudnosci))
-	wyniki = cursor.fetchall()
+	#cursor=conn.cursor()
+	#cursor.execute(sql_query, (cwiczenie, poziom_trudnosci))
+	#wyniki = cursor.fetchall()
 
 	for i, (nick, wynik) in enumerate(wyniki, start=1):
 		label_numer = CTkLabel(ramka_prostokat, text=f"{i}.", font=('Arial', 40), width=50, height=50)
@@ -251,25 +251,47 @@ def load_frame3(poziom_trudnosci):
 	info_kliknijspace=CTkLabel(page3_CzasReakcji, text='Kliknij w spacje',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 
 	def start(liczba_rund):
-		global punkty
+		global czasy
+		czasy = []
 		nonlocal czas_naZapamiętaine 
+		
 		#while liczba_rund>0:
-		if liczba_rund>=0:
+		for runda in range (liczba_rund):
 		#for i in range (liczba_rund):
+			print(f"lr{runda}")
 			info_kliknijspace.place_forget()
+			global isPressed
 			isPressed=0
-			czas=time.perf_counter()
+			czas=time.time()
 			obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{1}.png").resize((300, 300), Image.BILINEAR))
 			wyswietla_obrazki.configure(image=obrazek)
+			page3_CzasReakcji.update()
 
-			
+			time.sleep(5)
+			wyswietla_obrazki.configure(image='')
+			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
+			czasStart=time.time()
+			obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
+			wyswietla_obrazki.configure(image=obrazek2)
+			page3_CzasReakcji.update()
+			while isPressed == 0:
+				if keyboard.is_pressed("space"):
+					print("kliknieto")
+					#time.sleep(1)
+					isPressed = 1
+					wynik = time.time() - czasStart
+					czasy.append(wynik)
+					print(wynik)
+					
+					
+
+			'''
 			def pdo():
 				wyswietla_obrazki.configure(image='')
 				info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-				czasStart=time.perf_counter()
+				czasStart=time.time()
 				obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
 				wyswietla_obrazki.configure(image=obrazek2)
-
                 # Sprawdź, czy klawisz "spacja" został naciśnięty w funkcji start()
 				def check_space(event):
 					global punkty
@@ -283,13 +305,15 @@ def load_frame3(poziom_trudnosci):
 
                 # Rejestrujemy funkcję check_space() jako funkcję obsługującą zdarzenia klawiatury
 				keyboard.hook(check_space)
-
+				
 			page3_CzasReakcji.after(czas_naZapamiętaine*1000,pdo)
-		else: 
-			wynikKoncowy=punkty
-			#wyniki.append(wynik)
-			print(f"CR, {poziom_trudnosci, wynikKoncowy, czasCwiczenia}")
-			koniec('CR',poziom_trudnosci,wynikKoncowy,czasCwiczenia)
+			'''
+
+		global wynikKoncowy
+		wynikKoncowy = round(sum(czasy) / len(czasy), 2)
+		#wyniki.append(wynik)
+		print(f"CR, {poziom_trudnosci, wynikKoncowy, czasCwiczenia}")
+		koniec('CR',poziom_trudnosci,wynikKoncowy,czasCwiczenia)
 		
 
 			#if time.perf_counter()-czas>=czas_naZapamiętaine:
