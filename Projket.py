@@ -10,7 +10,7 @@ czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
 
-'''
+
 DRIVER_NAME='SQL SERVER'
 SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'
 DARABASE_NAME='Pazig'
@@ -24,7 +24,7 @@ connection_string=f"""
 conn=pyodbc.connect(connection_string)
 cursor=conn.cursor()
 print(conn)
-'''
+
 
 def load_frame1():
 	page1_start.tkraise()
@@ -147,8 +147,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia} \n wynik końcowy:{wynikKoncowy}',fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100) #tu trzeba zrobić f' {ile ten wynik wynosi}'
-	print(wynikKoncowy)
+	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia} \n wynik końcowy:{wynikKoncowy}',fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100) 
 	napis_TwojWynik.place(relx=0.5,rely=0.05, anchor='n')
 
 	info_podajNIck= CTkLabel(ramka_koniec,text='Proszę podaj nick!',font=('Arial',60,'bold'))
@@ -176,9 +175,9 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 			try:
 				sql_query = f"INSERT INTO Tabela_Wynikow (Game_ID, Difficulty, Nick, Wynik, Avg_time) VALUES (?, ?, ?, ?, ?)" 
 				# Execute the SQL Query 
-				#cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
+				cursor.execute(sql_query, (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
 				# Commit the transaction
-				#conn.commit()
+				conn.commit()
 				print("Dane zostały pomyślnie wstawione do bazy danych.")
 				wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia)
 			except Exception as e:
@@ -212,9 +211,9 @@ def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 
 
 	sql_query = f"SELECT TOP 10 Nick, Wynik FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik DESC"
-	#cursor=conn.cursor()
-	#cursor.execute(sql_query, (cwiczenie, poziom_trudnosci))
-	#wyniki = cursor.fetchall()
+	cursor=conn.cursor()
+	cursor.execute(sql_query, (cwiczenie, poziom_trudnosci))
+	wyniki = cursor.fetchall()
 
 	for i, (nick, wynik) in enumerate(wyniki, start=1):
 		label_numer = CTkLabel(ramka_prostokat, text=f"{i}.", font=('Arial', 40), width=50, height=50)
@@ -254,10 +253,8 @@ def load_frame3(poziom_trudnosci):
 		global czasy
 		czasy = []
 		nonlocal czas_naZapamiętaine 
-		
-		#while liczba_rund>0:
+
 		for runda in range (liczba_rund):
-		#for i in range (liczba_rund):
 			print(f"lr{runda}")
 			info_kliknijspace.place_forget()
 			global isPressed
@@ -267,7 +264,7 @@ def load_frame3(poziom_trudnosci):
 			wyswietla_obrazki.configure(image=obrazek)
 			page3_CzasReakcji.update()
 
-			time.sleep(5)
+			time.sleep(czas_naZapamiętaine)
 			wyswietla_obrazki.configure(image='')
 			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
 			czasStart=time.time()
@@ -277,60 +274,17 @@ def load_frame3(poziom_trudnosci):
 			while isPressed == 0:
 				if keyboard.is_pressed("space"):
 					print("kliknieto")
-					#time.sleep(1)
 					isPressed = 1
 					wynik = time.time() - czasStart
 					czasy.append(wynik)
 					print(wynik)
-					
-					
-
-			'''
-			def pdo():
-				wyswietla_obrazki.configure(image='')
-				info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-				czasStart=time.time()
-				obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
-				wyswietla_obrazki.configure(image=obrazek2)
-                # Sprawdź, czy klawisz "spacja" został naciśnięty w funkcji start()
-				def check_space(event):
-					global punkty
-					nonlocal czasStart, liczba_rund
-					if event.name == 'space':
-						print('ok')
-						wynik = czasStart - time.perf_counter()
-						#liczba_rund -= 1 
-						punkty =+1 # Odejmujemy 1 od liczby rund
-						start(liczba_rund-1)  # Rozpoczynamy kolejną rundę
-
-                # Rejestrujemy funkcję check_space() jako funkcję obsługującą zdarzenia klawiatury
-				keyboard.hook(check_space)
-				
-			page3_CzasReakcji.after(czas_naZapamiętaine*1000,pdo)
-			'''
 
 		global wynikKoncowy
 		wynikKoncowy = round(sum(czasy) / len(czasy), 2)
-		#wyniki.append(wynik)
 		print(f"CR, {poziom_trudnosci, wynikKoncowy, czasCwiczenia}")
 		koniec('CR',poziom_trudnosci,wynikKoncowy,czasCwiczenia)
-		
-
-			#if time.perf_counter()-czas>=czas_naZapamiętaine:
-			#	wyswietla_obrazki.configure(image='')
-			#	info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
-			#	czasStart=time.perf_counter()
-			#	obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
-			#	wyswietla_obrazki.configure(image=obrazek2)
-			#	while(isPressed==0):
-			#		if keyboard.is_pressed("space"):
-			#			isPressed=1
-			#			wynik=czasStart-time.perf_counter()
-			#			time.sleep(1)
-			#wyniki.append(wynik)
 
 	start(liczba_rund)
-	#wynikKoncowy=sum(wyniki)/len(wyniki)
 
 
 def load_frame4(poziom_trudnosci):
@@ -686,7 +640,7 @@ def load_frame6(poziom_trudnosci):
 	przycisk_sprawdz_rownanie.place(relx=0.5, rely=0.85, anchor='s')
 
 
-# initiallize app with basic settings
+
 root = CTk()
 root.title("Ćwiczenia")
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -696,8 +650,6 @@ root.option_add('*Font', 'Arial 20')
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
 
-
-# create a frame widgets
 page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
 page2_trudnosc = Frame(root, bg=bg_colour)
 page3_CzasReakcji = Frame(root, bg=bg_colour)
@@ -707,11 +659,10 @@ page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
 page7_koniec=Frame(root,bg=bg_colour)
 page8_wyniki= Frame(root,bg=bg_colour)
 
-# place frame widgets in window
 for frame in (page1_start, page2_trudnosc,page3_CzasReakcji,page4_TreningPamieci,page5_KolejnoscAlfabetyczna,page6_RownaniaMatematyczne,page7_koniec,page8_wyniki):
 	frame.grid(row=0, column=0, sticky="nesw")
 
-# load the first frame
+
 load_frame1()
-####
+
 root.mainloop()
