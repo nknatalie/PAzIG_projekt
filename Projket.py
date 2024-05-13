@@ -235,7 +235,7 @@ def load_frame3(poziom_trudnosci):
 		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page3_CzasReakcji,image=wroc,text='Powrót do startu',command=load_frame1)
-	button_wro.place(relx=0.9, rely=0.05)
+	button_wro.place(relx=0.9, rely=0.015)
 
 	global punkty 
 	global wynikKoncowy
@@ -293,7 +293,7 @@ def load_frame4(poziom_trudnosci):
 		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))	
 	button_wro=CTkButton(page4_TreningPamieci,image=wroc,text='Powrót do startu',command=load_frame1)
-	button_wro.place(relx=0.9, rely=0.05)
+	button_wro.place(relx=0.9, rely=0.015)
 
 
 	global czasCwiczenia #
@@ -424,7 +424,9 @@ def load_frame5(poziom_trudnosci):
 		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page5_KolejnoscAlfabetyczna,image=wroc,text='Powrót do startu',command=load_frame1)
-	button_wro.place(relx=0.9, rely=0.05)
+	button_wro.place(relx=0.9, rely=0.015)
+	ramka_KA=CTkFrame(page5_KolejnoscAlfabetyczna,corner_radius=10,fg_color='#dbda79')
+	ramka_KA.place(relx=0.2,rely=0.25,relwidth=0.6,relheight=0.6)
 
 	global czasCwiczenia 
 	global wynikKoncowy
@@ -498,12 +500,12 @@ def load_frame5(poziom_trudnosci):
 
 			listarozijana.clear()			
 			for i in range(liczba_slow):
-				numery.append(CTkLabel(page5_KolejnoscAlfabetyczna, text=str(i + 1), font=('Arial',55,'bold')))
-				numery[i].place(relx=0.1, rely=0.35 + 0.1 * i, anchor='center')
-				listarozijana_var = StringVar(page5_KolejnoscAlfabetyczna)
+				numery.append(CTkLabel(ramka_KA, text=str(i + 1), font=('Arial',55,'bold')))
+				numery[i].place(relx=0.325, rely=0.15 + 0.15 * i, anchor='center')
+				listarozijana_var = StringVar(ramka_KA)
 				listarozijana_var.set("Wybierz słowo")
-				listarozijana.append(OptionMenu(page5_KolejnoscAlfabetyczna, listarozijana_var, *SlowadoUlozenia))
-				listarozijana[i].place(relx=0.25, rely=0.35 + 0.1 * i, anchor='center')
+				listarozijana.append(OptionMenu(ramka_KA, listarozijana_var, *SlowadoUlozenia))
+				listarozijana[i].place(relx=0.575, rely=0.15 + 0.15 * i, anchor='center')
 		if liczba_rund ==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
 			global wynikKoncowy
@@ -514,7 +516,7 @@ def load_frame5(poziom_trudnosci):
 		
 					
 	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna,text='Dalej', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75,command=sprawdz)
-	przycisk_dalej.place(relx=0.9, rely=0.85,anchor='e')
+	przycisk_dalej.place(relx=0.94, rely=0.87,anchor='e')
 
 	start()
 
@@ -525,7 +527,7 @@ def load_frame6(poziom_trudnosci):
 		widget.destroy()
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
 	button_wro=CTkButton(page6_RownaniaMatematyczne,image=wroc,text='Powrót do startu',command=load_frame1)
-	button_wro.place(relx=0.9, rely=0.05)
+	button_wro.place(relx=0.9, rely=0.015)
 
 	global czasCwiczenia #
 	global wynikKoncowy
@@ -652,9 +654,9 @@ root.columnconfigure(0, weight=1)
 
 page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
 page2_trudnosc = Frame(root, bg=bg_colour)
-page3_CzasReakcji = Frame(root, bg=bg_colour)
-page4_TreningPamieci = Frame(root, bg=bg_colour)
-page5_KolejnoscAlfabetyczna= Frame(root, bg=bg_colour)
+page3_CzasReakcji = Frame(root, bg='#3A7A5E')
+page4_TreningPamieci = Frame(root, bg='#c93448')
+page5_KolejnoscAlfabetyczna= Frame(root, bg='#dedb2f')
 page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
 page7_koniec=Frame(root,bg=bg_colour)
 page8_wyniki= Frame(root,bg=bg_colour)
