@@ -320,8 +320,8 @@ def load_frame4(poziom_trudnosci):
 
 	def nowarunda():
 		nonlocal liczba_rund
-		liczba_rund -=1
-		if 0<=liczba_rund:
+		#liczba_rund -=1
+		if 0<liczba_rund:
 			for obrazek in obrazki:
 				obrazek.configure(image='')
 				obrazek.place_forget()
@@ -331,6 +331,9 @@ def load_frame4(poziom_trudnosci):
 			info_niepoprawniezaznaczone.place_forget()
 			mierzy_czas.place(relx=0.5,rely=0.90, anchor='s')
 			start_rundy()
+		else:
+			koniec ("TP", poziom_trudnosci,wynikKoncowy,czasCwiczenia)
+
 
 	def sprawdz(orginalna,etykieta,combo): 
 		tabZgodnisci=[]
@@ -368,6 +371,7 @@ def load_frame4(poziom_trudnosci):
 		global czasCwiczenia
 		global wynikKoncowy
 		nonlocal liczba_rund
+		liczba_rund -=1
 		if 0<=liczba_rund:
 			tablica=[] 
 			while len(tablica) < liczba_obrazkow:
@@ -402,7 +406,7 @@ def load_frame4(poziom_trudnosci):
 
 
 			info_ZapamietajPodajKolejnosc.configure(text='Podaj kolejność!')
-			page4_TreningPamieci.update()
+			#page4_TreningPamieci.update()
 		
 		if 0<liczba_rund:
 			button_dalej.place(relx=0.5,rely=0.90, anchor='s')
@@ -414,7 +418,7 @@ def load_frame4(poziom_trudnosci):
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			button_dalej.place(relx=0.5,rely=0.90, anchor='s')
 			button_dalej.configure(text='Koniec')
-			button_dalej.configure(command=lambda: koniec ("TP", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
+			button_dalej.configure(command=lambda: sprawdz(tablica2,tablica,comboboxy) )#koniec ("TP", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
 
 	start_rundy()
 
@@ -461,7 +465,8 @@ def load_frame5(poziom_trudnosci):
 		start()
 
 	def sprawdz():
-		global SlowadoUlozenia
+		global SlowadoUlozenia, czasCwiczenia,wynikKoncowy
+		nonlocal liczba_rund
 		wybrane_slowa = [option_menu["text"] for option_menu in listarozijana]
 		posortowane_slowa = sorted(SlowadoUlozenia)
 		if wybrane_slowa == posortowane_slowa:
