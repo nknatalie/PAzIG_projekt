@@ -10,9 +10,8 @@ czasCwiczenia = 0.0
 
 bg_colour = '#285A88'
 
-
 DRIVER_NAME='SQL SERVER'
-SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'
+SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'  # NALEZT ZMIENIĆ 
 DARABASE_NAME='Pazig'
 # tu można dodac jeszcze USERNAME oraz PASSWORD
 connection_string=f"""
@@ -246,7 +245,7 @@ def load_frame3(poziom_trudnosci):
 	liczba_rund=5
 
 	wyswietla_obrazki=CTkLabel(page3_CzasReakcji, text='')
-	wyswietla_obrazki.place(relx=0.5, rely=0.6, anchor='s')
+	#wyswietla_obrazki.place(relx=0.5, rely=0.6, anchor='s')
 	info_kliknijspace=CTkLabel(page3_CzasReakcji, text='Kliknij w spacje',fg_color='white', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 
 	def start(liczba_rund):
@@ -262,6 +261,9 @@ def load_frame3(poziom_trudnosci):
 			czas=time.time()
 			obrazek = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{1}.png").resize((300, 300), Image.BILINEAR))
 			wyswietla_obrazki.configure(image=obrazek)
+			pozycajX= random.uniform(0.1,0.9)
+			pozycajY= random.uniform(0.1,0.9)
+			wyswietla_obrazki.place(relx=pozycajX, rely=pozycajY, anchor='s')
 			page3_CzasReakcji.update()
 
 			time.sleep(czas_naZapamiętaine)
@@ -269,6 +271,9 @@ def load_frame3(poziom_trudnosci):
 			info_kliknijspace.place(relx=0.5,rely=0.90, anchor='s')
 			czasStart=time.time()
 			obrazek2 = ImageTk.PhotoImage(Image.open(f"Czasreakcji\{2}.png").resize((300, 300), Image.BILINEAR))
+			pozycajX= random.uniform(0.1,0.9)
+			pozycajY= random.uniform(0.1,0.9)
+			wyswietla_obrazki.place(relx=pozycajX, rely=pozycajY, anchor='s')
 			wyswietla_obrazki.configure(image=obrazek2)
 			page3_CzasReakcji.update()
 			while isPressed == 0:
@@ -447,6 +452,8 @@ def load_frame5(poziom_trudnosci):
 
 	info_jakieslowasa= CTkLabel(page5_KolejnoscAlfabetyczna,text='',font=('Arial',45))
 	info_jakieslowasa.place(relx=0.5,rely=0.15, anchor='n')
+	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna, font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
+	przycisk_dalej.place(relx=0.94, rely=0.87,anchor='e')
 
 	numery = []
 	listarozijana = []
@@ -460,9 +467,9 @@ def load_frame5(poziom_trudnosci):
 	
 	SlowadoUlozenia=[]
 
-	def nowa_runda():  # albo robimy funkcję albo w def sprawdź damy tą jedną linijkę kodu (tak jak napisałam poniżej)
-		listarozijana.clear()
-		start()
+	#def nowa_runda():  # albo robimy funkcję albo w def sprawdź damy tą jedną linijkę kodu (tak jak napisałam poniżej)
+	#	listarozijana.clear()
+	#	start()
 
 	def sprawdz():
 		global SlowadoUlozenia, czasCwiczenia,wynikKoncowy
@@ -475,7 +482,7 @@ def load_frame5(poziom_trudnosci):
 			global punkty
 			punkty += len(wybrane_slowa)
 			print(punkty)
-			start()
+			#start()
 			#nowa_runda()
 		else:
 			print("Błędna kolejność!")
@@ -488,8 +495,14 @@ def load_frame5(poziom_trudnosci):
 			punkty += sum(checkTab)
 			print(punkty)
 			#listarozijana.clear()
-			start()
+			#start()
 			#nowa_runda()
+			
+		if liczba_rund >0:
+			start()
+		else:
+			koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia)
+			
 
 	def start():
 		global czasCwiczenia, SlowadoUlozenia
@@ -511,18 +524,19 @@ def load_frame5(poziom_trudnosci):
 				listarozijana_var.set("Wybierz słowo")
 				listarozijana.append(OptionMenu(ramka_KA, listarozijana_var, *SlowadoUlozenia))
 				listarozijana[i].place(relx=0.575, rely=0.15 + 0.15 * i, anchor='center')
-		if liczba_rund ==0:
+
+		if liczba_rund > 0:
+			przycisk_dalej.configure(command=sprawdz)
+			przycisk_dalej.configure(text='Dalej')		
+		else:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
 			global wynikKoncowy
 			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			przycisk_dalej.configure(text='Koniec')
-			przycisk_dalej.configure(command=lambda: koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
+			przycisk_dalej.configure(command=sprawdz)#lambda: koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
 		
 					
-	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna,text='Dalej', font=('Arial',60,'bold'),corner_radius=32,width=250, height=75,command=sprawdz)
-	przycisk_dalej.place(relx=0.94, rely=0.87,anchor='e')
-
 	start()
 
 
