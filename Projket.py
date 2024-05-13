@@ -591,6 +591,7 @@ def load_frame6(poziom_trudnosci):
 			elif wpisany_wynik !='': # kiedy użytkownik nic nie wpisze to nic się nie dzieje
 				obrazek_nie_ok_dp=ImageTk.PhotoImage(Image.open('zle.png').resize((100,100),Image.BILINEAR))
 				info_o_wyniku.configure(image=obrazek_nie_ok_dp)
+		
 		if liczba_rund>0:
 			page6_RownaniaMatematyczne.after(1000,nastepna_runda)
 		else:
