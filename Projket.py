@@ -455,6 +455,8 @@ def load_frame5(poziom_trudnosci):
 	przycisk_dalej= CTkButton(page5_KolejnoscAlfabetyczna, font=('Arial',60,'bold'),corner_radius=32,width=250, height=75)
 	przycisk_dalej.place(relx=0.94, rely=0.87,anchor='e')
 
+	inforamccja_label=CTkLabel(page5_KolejnoscAlfabetyczna,text='',fg_color='red',font=('Arial',40),corner_radius=32,width=250, height=75)
+
 	numery = []
 	listarozijana = []
 
@@ -475,18 +477,33 @@ def load_frame5(poziom_trudnosci):
 		global SlowadoUlozenia, czasCwiczenia,wynikKoncowy
 		nonlocal liczba_rund
 		wybrane_slowa = [option_menu["text"] for option_menu in listarozijana]
+		print(wybrane_slowa)
 		posortowane_slowa = sorted(SlowadoUlozenia)
-		if wybrane_slowa == posortowane_slowa:
+		if 'Wybierz słowo' in wybrane_slowa:
+			print('dupa')
+			inforamccja_label.place(relx=0.1,rely=0.9,anchor='w')
+			inforamccja_label.configure(text='Wybierz słowa')
+		elif len(set(wybrane_slowa))!= len(wybrane_slowa):
+			print('dupa 2x')
+			inforamccja_label.place(relx=0.1,rely=0.9,anchor='w')
+			inforamccja_label.configure(text='Powtarzają się słowa')
+		elif wybrane_slowa == posortowane_slowa: 
 			print("Kolejność poprawna!")
 			#listarozijana.clear()
+			inforamccja_label.place_forget()
 			global punkty
 			punkty += len(wybrane_slowa)
 			print(punkty)
 			#start()
 			#nowa_runda()
+			if liczba_rund >0:
+				start()
+			else:
+				koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia)			
 		else:
 			print("Błędna kolejność!")
 			checkTab = []
+			inforamccja_label.place_forget()
 			for el in range(len(wybrane_slowa)):
 				if wybrane_slowa[el] == posortowane_slowa[el]:
 					checkTab.append(1)
@@ -494,21 +511,21 @@ def load_frame5(poziom_trudnosci):
 					checkTab.append(0)
 			punkty += sum(checkTab)
 			print(punkty)
+			if liczba_rund >0:
+				start()
+			else:
+				koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia)	
 			#listarozijana.clear()
 			#start()
 			#nowa_runda()
 			
-		if liczba_rund >0:
-			start()
-		else:
-			koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia)
-			
-
 	def start():
 		global czasCwiczenia, SlowadoUlozenia
 		nonlocal liczba_rund
 		liczba_rund -=1
+		
 		if 0<= liczba_rund:
+			inforamccja_label.place_forget()
 			SlowadoUlozenia =random.sample(ListaSlow,liczba_slow)
 			slowa_string = ", ".join(SlowadoUlozenia) 
 			info_jakieslowasa.configure(text=slowa_string)
@@ -535,7 +552,6 @@ def load_frame5(poziom_trudnosci):
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			przycisk_dalej.configure(text='Koniec')
 			przycisk_dalej.configure(command=sprawdz)#lambda: koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
-		
 					
 	start()
 
