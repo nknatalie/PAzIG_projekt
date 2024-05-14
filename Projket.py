@@ -300,7 +300,6 @@ def load_frame4(poziom_trudnosci):
 	button_wro=CTkButton(page4_TreningPamieci,image=wroc,text='Powrót do startu',command=load_frame1)
 	button_wro.place(relx=0.9, rely=0.015)
 
-
 	global czasCwiczenia #
 	global wynikKoncowy
 	global punkty
@@ -695,9 +694,9 @@ root.columnconfigure(0, weight=1)
 
 page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
 page2_trudnosc = Frame(root, bg=bg_colour)
-page3_CzasReakcji = Frame(root, bg='#3A7A5E')
-page4_TreningPamieci = Frame(root, bg='#c93448')
-page5_KolejnoscAlfabetyczna= Frame(root, bg='#dedb2f')
+page3_CzasReakcji = Frame(root, bg='#3A7A5E') #zielony
+page4_TreningPamieci = Frame(root, bg='#c93448') #czerwony
+page5_KolejnoscAlfabetyczna= Frame(root, bg='#dedb2f') #żółty
 page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
 page7_koniec=Frame(root,bg=bg_colour)
 page8_wyniki= Frame(root,bg=bg_colour)
