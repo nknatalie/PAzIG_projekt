@@ -154,7 +154,11 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
 
-	napis_TwojWynik=CTkLabel(ramka_koniec,text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia} \n wynik końcowy:{wynikKoncowy}',fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100) 
+	napis_TwojWynik=CTkLabel(ramka_koniec,fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100)
+	if cwiczenie=='CR':
+		napis_TwojWynik.configure(text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia}')
+	else:
+		napis_TwojWynik.configure(text=f'Twój wynik: \n wynik końcowy: {wynikKoncowy}')
 	napis_TwojWynik.place(relx=0.5,rely=0.05, anchor='n')
 
 	info_podajNIck= CTkLabel(ramka_koniec,text='Proszę podaj nick!',font=('Arial',60,'bold'))
@@ -216,8 +220,10 @@ def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 	ramka_prostokat = CTkFrame(ramka_wyniki, corner_radius=0, bg_color='white')
 	ramka_prostokat.place(relx=0.04, rely=0.06, relwidth=0.92, relheight=0.87)
 
-
-	sql_query = f"SELECT TOP 10 Nick, Wynik FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik DESC"
+	if cwiczenie=='CR':
+		sql_query = f"SELECT TOP 10 Nick, Avg_time FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik ASC"
+	else:
+		sql_query = f"SELECT TOP 10 Nick, Wynik FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik DESC"
 	cursor=conn.cursor()
 	cursor.execute(sql_query, (cwiczenie, poziom_trudnosci))
 	wyniki = cursor.fetchall()
@@ -246,9 +252,10 @@ def load_frame3(poziom_trudnosci):
 
 	global punkty 
 	global wynikKoncowy
+	global czasCwiczenia
 	wynikKoncowy=0
 	punkty =0
-	czasCwiczenia = 0
+	czasCwiczenia=0
 	czas_naZapamiętaine = 4 if poziom_trudnosci==1 else 3 if poziom_trudnosci==2 else 2
 	liczba_rund=5
 
@@ -292,8 +299,8 @@ def load_frame3(poziom_trudnosci):
 					czasy.append(wynik)
 					print(wynik)
 
-		global wynikKoncowy
-		wynikKoncowy = round(sum(czasy) / len(czasy), 2)
+		global czasCwiczenia
+		czasCwiczenia = round(sum(czasy) / len(czasy), 2)
 		print(f"CR, {poziom_trudnosci, wynikKoncowy, czasCwiczenia}")
 		koniec('CR',poziom_trudnosci,wynikKoncowy,czasCwiczenia)
 
@@ -428,6 +435,8 @@ def load_frame4(poziom_trudnosci):
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2) #tu trzeba bedzie odjąć czas który się odlicza
 			wynikKoncowy = punkty * 50 + round((60 - czasCwiczenia) * 50)
 			print(czasCwiczenia, punkty, wynikKoncowy)
+			if wynikKoncowy < 0:
+				wynikKoncowy = 0 
 			button_dalej.place(relx=0.5,rely=0.90, anchor='s')
 			button_dalej.configure(text='Koniec')
 			button_dalej.configure(command=lambda: sprawdz(tablica2,tablica,comboboxy) )#koniec ("TP", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
@@ -557,6 +566,8 @@ def load_frame5(poziom_trudnosci):
 			global wynikKoncowy
 			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
 			print(czasCwiczenia, punkty, wynikKoncowy)
+			if wynikKoncowy < 0:
+				wynikKoncowy = 0 
 			przycisk_dalej.configure(text='Koniec')
 			przycisk_dalej.configure(command=sprawdz)#lambda: koniec ("KA", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
 					
@@ -682,6 +693,8 @@ def load_frame6(poziom_trudnosci):
 			global wynikKoncowy
 			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
 			print(czasCwiczenia, punkty, wynikKoncowy)
+			if wynikKoncowy < 0:
+				wynikKoncowy = 0 
 			przycisk_sprawdz_rownanie.configure(text='Koniec', command= sprawdz )#("RM", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
 		return liczba_rund
 
@@ -703,9 +716,9 @@ root.columnconfigure(0, weight=1)
 page1_start = Frame(root, bg=bg_colour) # width=500, height=600,
 page2_trudnosc = Frame(root, bg=bg_colour)
 page3_CzasReakcji = Frame(root, bg='#3A7A5E') #zielony
-page4_TreningPamieci = Frame(root, bg='#c93448') #czerwony
+page4_TreningPamieci = Frame(root, bg=bg_colour) #czerwony
 page5_KolejnoscAlfabetyczna= Frame(root, bg='#dedb2f') #żółty
-page6_RownaniaMatematyczne=Frame(root,bg=bg_colour)
+page6_RownaniaMatematyczne=Frame(root,bg='#f5770a')
 page7_koniec=Frame(root,bg=bg_colour)
 page8_wyniki= Frame(root,bg=bg_colour)
 
