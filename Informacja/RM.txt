@@ -1,14 +1,7 @@
-1. Wybierz poziom trudności: 
-    Łatwy (5 rund, dodawanie), 
-    Średni (7 rund, dodawanie i odejmowanie), 
-    Trudny (10 rund, dodawanie, odejmowanie i mnożenie).
-2. Rozwiązuj równania: 
-    W każdej rundzie oblicz wynik podanego równania.
-3. Wprowadź odpowiedź: 
-    Wpisz wynik równania używając tylko cyfr i zatwierdź.
-4. Sprawdź odpowiedź: 
-    Po zatwierdzeniu pojawi się informacja, czy odpowiedź była poprawna, czy błędna.
-5. Przejście do następnej rundy: 
-    Powtarzaj proces dla wszystkich rund.
+Celem zadania jest rozwiązywanie kolejnych równań matematycznych. 
+Wybranie wyższego poziomu trudności będzie skutkowało zwiększeniem liczby rund oraz
+różnorodności operacji matematycznych. Po wpisaniu wyniku kliknij "dalej" aby przejść do następnego
+równania. Wyświetli się wtedy komunikat czy poprawnie rozwiązano równanie.
+Postaraj się rozwiązać zadania jak najszybciej - wpłynie to na wynik końcowy!
 
 Powodzenia!
