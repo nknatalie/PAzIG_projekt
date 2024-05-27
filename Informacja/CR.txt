@@ -1,14 +1,3 @@
-1. Wybierz poziom trudności: 
-    Łatwy (4s), 
-    Średni (3s), 
-    Trudny (2s).
-2. Zapamiętaj obraz: 
-    Czas zależy od wybranego poziomu. Czas nie jest wyświetlany.
-3. Reaguj na zmianę obrazu: 
-    Po zmianie obrazu naciśnij spację jak najszybciej.
-4. Powtarzaj rundy: 
-    Ćwiczenie ma stałą liczbę rund dla wszystkich poziomów.
-5. Zakończenie: 
-    Po wszystkich rundach wyświetli się Twój średni czas reakcji.
+Celem ćwiczenia jest sprawdzenie czasu reakcji na bodziec wzrokowy. W losowym miejscu na ekranie wyświetlony zostanie obraz,  który po wyznaczonym czasie (zależnym od wybranego poziomu trudności) obraz zmieni się. Należy wtedy jak najszybciej wcisnąć przycisk "SPACJA". Obraz powróci do swojej pierwotnej wersji i czynność należy powtórzyć 5 razy (zawsze jest to 5 rund). Wynikiem końcowym będzie średni czas reakcji z wszystkich rund.
 
 Powodzenia!

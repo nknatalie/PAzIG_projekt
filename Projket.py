@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter.messagebox as messagebox
 from PIL import Image, ImageTk
 from customtkinter import *
 import random
@@ -58,27 +59,13 @@ def load_frame2(cwiczenie):
 		widget.destroy()	
 
 	def show_info(cwiczenie):
-		info_window = CTkToplevel(root)
-		info_window.grab_set()
-		info_window.title("Informacja")
-		if cwiczenie=='CR':
-			info_window.geometry('1000x600')
-		elif cwiczenie=='KA':
-			info_window.geometry('1400x500')
-		elif cwiczenie=='TP':
-			info_window.geometry('1425x600')
-		elif cwiczenie=='RM':
-			info_window.geometry('1450x600')	
-
-		info_window.resizable(True,True) #width,height
-		info_text=CTkLabel(info_window,font=('Arial',35),anchor='w',justify='left')
-		info_text.place(relx=0,rely=0)
 		info_file=f'Informacja/{cwiczenie}.txt'
-		
-		with open(info_file,'r',encoding='utf-8') as file:
-			zawartosc=file.read()
-			info_text.configure(text=zawartosc)
-		
+		try:
+			with open(info_file,'r',encoding='utf-8') as file:
+				zawartosc=file.read()
+				messagebox.showinfo(f'Informacja - {cwiczenia}', zawartosc)
+		except FileNotFoundError:
+			messagebox.showerror("Błąd", "Nie znaleziono pliku informacyjnego.")	
 	
 	if cwiczenie == 'CR':
 		cwiczenia='czasu reakcji'

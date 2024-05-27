@@ -1,12 +1,3 @@
-1. Wybierz poziom trudności: 
-    Łatwy (3 rundy, 4 słowa), 
-    Średni (4 rundy, 5 słów), 
-    Trudny (5 rund, 6 słów).
-2. Układaj słowa alfabetycznie: 
-    Dla każdej rundy wybierz wszystkie słowa z listy rozwijanej w kolejności alfabetycznej.
-3. Unikaj powtórzeń: 
-    Każde słowo może być wybrane tylko raz.
-4. Przejście do następnej rundy: 
-    Po wykorzystaniu wszystkich słów przejdź do następnej rundy.
+Celem zadania jest ułożenie podanych słów w kolejności alfabetycznej. Wybór poziomu trudności wpłynie na liczbę rund oraz słów w jednej rundzie.  W każdej rundzie wybierz z listy rozwijanej słowa w taki sposób, aby były ułożone w kolejności alfabetycznej. Każde słowo można wykorzystać tylko raz!  Na Twój wynik wpłynie liczba poprawnych odpowiedzi oraz czas rozwiązania zadania.
 
 Powodzenia!
