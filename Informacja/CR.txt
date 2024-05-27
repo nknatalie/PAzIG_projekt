@@ -1,1 +1,14 @@
-CR
+1. Wybierz poziom trudności: 
+    Łatwy (4s), 
+    Średni (3s), 
+    Trudny (2s).
+2. Zapamiętaj obraz: 
+    Czas zależy od wybranego poziomu. Czas nie jest wyświetlany.
+3. Reaguj na zmianę obrazu: 
+    Po zmianie obrazu naciśnij spację jak najszybciej.
+4. Powtarzaj rundy: 
+    Ćwiczenie ma stałą liczbę rund dla wszystkich poziomów.
+5. Zakończenie: 
+    Po wszystkich rundach wyświetli się Twój średni czas reakcji.
+
+Powodzenia!

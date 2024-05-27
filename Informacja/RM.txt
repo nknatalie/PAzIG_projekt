@@ -1,1 +1,14 @@
-RM OK
+1. Wybierz poziom trudności: 
+    Łatwy (5 rund, dodawanie), 
+    Średni (7 rund, dodawanie i odejmowanie), 
+    Trudny (10 rund, dodawanie, odejmowanie i mnożenie).
+2. Rozwiązuj równania: 
+    W każdej rundzie oblicz wynik podanego równania.
+3. Wprowadź odpowiedź: 
+    Wpisz wynik równania używając tylko cyfr i zatwierdź.
+4. Sprawdź odpowiedź: 
+    Po zatwierdzeniu pojawi się informacja, czy odpowiedź była poprawna, czy błędna.
+5. Przejście do następnej rundy: 
+    Powtarzaj proces dla wszystkich rund.
+
+Powodzenia!

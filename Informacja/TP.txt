@@ -1,1 +1,15 @@
-TP- DZIALA
+1. Wybierz poziom trudności: 
+    Łatwy (3 rundy, 3 obrazki), 
+    Średni (4 rundy, 4 obrazki),
+    Trudny (8 rund, 5 obrazków).
+2. Zapamiętaj kolejność obrazków: 
+    Masz 5 sekund na zapamiętanie kolejności obrazków.
+3. Wybierz pozycje: 
+    Po 5 sekundach obrazki zmienią kolejność. 
+    Wybierz z listy rozwijanej numer pozycji, w której obrazek pierwotnie występował.
+4. Unikaj powtórzeń:
+    Każda pozycja może być wybrana tylko raz.
+4. Przejście do następnej rundy: 
+    Powtarzaj proces dla wszystkich rund.
+
+Powodzenia!
