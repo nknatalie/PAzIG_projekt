@@ -248,7 +248,7 @@ def load_frame3(poziom_trudnosci):
 	global wynikKoncowy
 	wynikKoncowy=0
 	punkty =0
-	czasCwiczenia
+	czasCwiczenia = 0
 	czas_naZapamiętaine = 4 if poziom_trudnosci==1 else 3 if poziom_trudnosci==2 else 2
 	liczba_rund=5
 
