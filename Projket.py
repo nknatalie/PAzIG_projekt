@@ -617,11 +617,14 @@ def load_frame6(poziom_trudnosci):
 	podaj_Wynik=CTkEntry(page6_RownaniaMatematyczne, font=('Arial',55,'bold'),corner_radius=10, justify=CENTER)
 	podaj_Wynik.place(relx=0.85, rely=0.425,relwidth=0.2,relheight=0.2, anchor='e')
 	
+	error_label=CTkLabel(page6_RownaniaMatematyczne,text='',fg_color='red',font=('Arial',40,'bold'),corner_radius=32,width=250, height=75)
+	
 	def sprawdz():
 		nonlocal liczba_rund,poziom_trudnosci
 		global czasCwiczenia,wynikKoncowy
 		wpisany_wynik=podaj_Wynik.get().strip()
-		if wpisany_wynik.isdigit():
+		if wpisany_wynik.isdigit(): 
+			error_label.place_forget()
 			if wpisany_wynik==str(wynik):
 				obrazek_ok_dp=ImageTk.PhotoImage(Image.open('ok.png').resize((75,75),Image.BILINEAR))
 				info_o_wyniku.configure(image=obrazek_ok_dp)
@@ -639,6 +642,9 @@ def load_frame6(poziom_trudnosci):
 					page6_RownaniaMatematyczne.after(1000,nastepna_runda)
 				else:
 					page6_RownaniaMatematyczne.after(1000,lambda: koniec("RM", poziom_trudnosci,wynikKoncowy,czasCwiczenia))
+		else:
+			error_label.place(relx=0.09, rely=0.8, anchor='w')
+			error_label.configure(text='Wpisz cyfry')
 		
 
 		
