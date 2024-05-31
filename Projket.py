@@ -154,12 +154,14 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 	def clear_entry(event):
 		if podaj_nick.get() == 'Podaj nick!':
 			podaj_nick.delete(0, "end")
+			podaj_nick.configure(justify='center')
 			
 	def refill_entry(event):
 		if not podaj_nick.get():
 			podaj_nick.insert(0, 'Podaj nick!')
+			podaj_nick.configure(justify='center')
 
-	podaj_nick = CTkEntry(ramka_koniec, font=('Arial', 60), corner_radius=32, width=250, height=75)
+	podaj_nick = CTkEntry(ramka_koniec, font=('Arial', 60), corner_radius=32, width=250, height=75,justify='center')
 	podaj_nick.insert(0, 'Podaj nick!')
 	podaj_nick.bind("<FocusIn>", clear_entry)
 	podaj_nick.bind("<FocusOut>", refill_entry)
