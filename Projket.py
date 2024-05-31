@@ -1,3 +1,4 @@
+#potrzebne bibioteki
 from tkinter import *
 import tkinter.messagebox as messagebox
 from PIL import Image, ImageTk
@@ -9,10 +10,11 @@ import pyodbc
 
 czasCwiczenia = 0.0
 
-bg_colour = '#285A88'
+bg_colour = '#285A88' #główny kolor 
 
+# połączenie z bazą danych 
 DRIVER_NAME='SQL SERVER'
-SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'  # NALEZT ZMIENIĆ 
+SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'  # NALEZY ZMIENIĆ w przypadku nowego servera
 DARABASE_NAME='Pazig'
 # tu można dodac jeszcze USERNAME oraz PASSWORD
 connection_string=f"""
@@ -28,9 +30,9 @@ print(conn)
 
 def load_frame1():
 	page1_start.tkraise()
-	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#5E7FA6')
+	ramka_start=CTkFrame(page1_start, corner_radius=10,fg_color='#5E7FA6') # utworzenie ramki 
 	ramka_start.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
-
+	# obrazki nawiązujace do ćwiczenia
 	obrazek_CR = ImageTk.PhotoImage(Image.open(f"wybor\CR.png").resize((100, 100), Image.BILINEAR))
 	obrazek_TP = ImageTk.PhotoImage(Image.open(f"wybor\TP.png").resize((100,100), Image.BILINEAR))
 	obrazek_KA = ImageTk.PhotoImage(Image.open(f"wybor\KA.png").resize((100,100), Image.BILINEAR))
@@ -38,7 +40,7 @@ def load_frame1():
 
 	info_WybierzRozgrywke= CTkLabel(ramka_start,text="Wybierz rozgrywkę",fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=75)
 	info_WybierzRozgrywke.place(relx=0.5,rely=0.05,anchor='n')
-
+	# przyciski z nazwami ćwiczenia i obrazkami 
 	wybor_CzasReakcji= CTkButton(ramka_start, text="         Czas reakcji        ",image=obrazek_CR,compound='top', command=lambda: load_frame2("CR"), font=('Arial',30),corner_radius=32,width=300, height=100) 
 	wybor_CzasReakcji.place(relx=0.15,rely=0.35,anchor='w')
 
@@ -54,10 +56,10 @@ def load_frame1():
 
 def load_frame2(cwiczenie):
 	page2_trudnosc.tkraise()
-
+	# usunięcie wcześniejszych wyborów
 	for widget in page2_trudnosc.winfo_children():
 		widget.destroy()	
-
+	# wyśweitlenie odpoweidniego pliku txt z instrukcją do ćwiczeń
 	def show_info(cwiczenie):
 		info_file=f'Informacja/{cwiczenie}.txt'
 		try:
@@ -80,12 +82,12 @@ def load_frame2(cwiczenie):
 	info_wyborpoziomu=CTkLabel(page2_trudnosc,text=f'Wybierz poziom trudności dla {cwiczenia}',fg_color='white', font=('Arial',60),corner_radius=32,width=250, height=85 )
 	info_wyborpoziomu.place(relx=0.5,rely=0.05,anchor='n')
 	wroc=ImageTk.PhotoImage(Image.open('zle.png').resize((20,20),Image.BILINEAR))
-	button_wro=CTkButton(page2_trudnosc,image=wroc,text='Powrót do startu',command=load_frame1)
+	button_wro=CTkButton(page2_trudnosc,image=wroc,text='Powrót do startu',command=load_frame1) # przycisk pozwalający na powrót do wyboru ćwiczenia 
 	button_wro.place(relx=0.9, rely=0.015)
-	info_button=CTkButton(page2_trudnosc,text="Informacja", command=lambda: show_info(cwiczenie))
+	info_button=CTkButton(page2_trudnosc,text="Informacja", command=lambda: show_info(cwiczenie)) # przycisk pozwalający pokazać informację dotycząco ćwiczenia
 	info_button.place(relx=0.025,rely=0.025,anchor='w')
 
-
+	# przejście do odpowiedniej strony z ćwiczeniami i poziomem trudności 
 	def dalej():
 		poziom_trudnosci=radio_var_poziom.get()
 		if poziom_trudnosci !=0:
@@ -100,6 +102,7 @@ def load_frame2(cwiczenie):
 		else:
 			komunikat_brak_wyboru.place(relx=0.5,rely=0.15, anchor='n')
 
+	# obrazki określajace poziom trudności 
 	obrazek_latwy = Image.open("Icons/latwy.png")  
 	obrazek_latwy = obrazek_latwy.resize((125, 125), Image.BILINEAR)  
 	obrazek_latwy = ImageTk.PhotoImage(obrazek_latwy)
@@ -131,7 +134,7 @@ def load_frame2(cwiczenie):
 
 	zatwierdzenie_trudnosci=CTkButton(page2_trudnosc,text='Dalej',font=('Arial',50),corner_radius=32,width=250, height=75, command= dalej)
 	zatwierdzenie_trudnosci.place(relx=0.5,rely=0.80,anchor='n')
-
+	# komunikat brak wyboru trudności
 	komunikat_brak_wyboru=CTkLabel(page2_trudnosc, text="Wybierz poziom trudności!",fg_color='red',font=('Arial',40),corner_radius=32,width=250, height=75)
 	komunikat_brak_wyboru.forget()
 
@@ -140,7 +143,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 	page7_koniec.tkraise()
 	ramka_koniec=CTkFrame(page7_koniec,corner_radius=10,fg_color='#5E7FA6' )
 	ramka_koniec.place(relx=0.1,rely=0.1,relwidth=0.8,relheight=0.8)
-
+	# wyświetlanie czasu ćwiczenia albo wyniku końcowego w zalezności od wyboru ćwiczenia
 	napis_TwojWynik=CTkLabel(ramka_koniec,fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100)
 	if cwiczenie=='CR':
 		napis_TwojWynik.configure(text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia}')
@@ -150,7 +153,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 
 	info_podajNIck= CTkLabel(ramka_koniec,text='Proszę podaj nick!',font=('Arial',60,'bold'))
 	info_podajNIck.place(relx=0.5,rely=0.3,anchor='n')
-	
+	# wyśweitlanie informacji w miejscu do wpisania nicku
 	def clear_entry(event):
 		if podaj_nick.get() == 'Podaj nick!':
 			podaj_nick.delete(0, "end")
@@ -169,7 +172,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 
 	def dalej():
 		nick=podaj_nick.get()
-		if nick != 'Podaj nick!' and nick !='':
+		if nick != 'Podaj nick!' and nick !='': # jeśli użytkwinik wpisał nick do bazy to nastęuje wpisanie cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia do bazy sql
 			print(f'{cwiczenie}, {poziom_trudnosci}, {nick}')
 	
 			try:
@@ -179,7 +182,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 				# Commit the transaction
 				conn.commit()
 				print("Dane zostały pomyślnie wstawione do bazy danych.")
-				wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia)
+				wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia) # przejście do strony z wynikami 
 			except Exception as e:
 				print(f"Błąd podczas wstawiania danych do bazy danych: {str(e)}")
 				#conn.rollback()
@@ -189,7 +192,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 					cursor.close()
 					conn.close()			
 			'''					
-			
+	# przycisk wywołujacy funkcję dalej	
 	wyniki_dalej= CTkButton(ramka_koniec,text="Dalej", font=('Arial',40),corner_radius=32,width=250, height=75,command= dalej)#lambda: wyniki (cwiczenie, poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia))
 	wyniki_dalej.place(relx=0.5, rely=0.85, anchor='n')
 
@@ -208,7 +211,7 @@ def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 	ramka_wyniki.place(relx=0.175,rely=0.15,relwidth=0.68,relheight=0.65)
 	ramka_prostokat = CTkFrame(ramka_wyniki, corner_radius=0, bg_color='white')
 	ramka_prostokat.place(relx=0.04, rely=0.06, relwidth=0.92, relheight=0.87)
-
+	
 	if cwiczenie=='CR':
 		sql_query = f"SELECT TOP 10 Nick, Avg_time FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik ASC"
 	else:
