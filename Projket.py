@@ -146,7 +146,7 @@ def koniec(cwiczenie, poziom_trudnosci,wynikKoncowy,czasCwiczenia):
 	# wyświetlanie czasu ćwiczenia albo wyniku końcowego w zalezności od wyboru ćwiczenia
 	napis_TwojWynik=CTkLabel(ramka_koniec,fg_color='white', font=('Arial',60),corner_radius=32,width=500, height=100)
 	if cwiczenie=='CR':
-		napis_TwojWynik.configure(text=f'Twój wynik: \n czas ćwiczenia: {czasCwiczenia}')
+		napis_TwojWynik.configure(text=f'Twój wynik: \n średni czas: {czasCwiczenia} s')
 	else:
 		napis_TwojWynik.configure(text=f'Twój wynik: \n wynik końcowy: {wynikKoncowy}')
 	napis_TwojWynik.place(relx=0.5,rely=0.05, anchor='n')
@@ -213,7 +213,7 @@ def wyniki(cwiczenie,poziom_trudnosci,nick,wynikKoncowy,czasCwiczenia):
 	ramka_prostokat.place(relx=0.04, rely=0.06, relwidth=0.92, relheight=0.87)
 	
 	if cwiczenie=='CR':
-		sql_query = f"SELECT TOP 10 Nick, Avg_time FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik ASC"
+		sql_query = f"SELECT TOP 10 Nick, Avg_time FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Avg_time ASC"
 	else:
 		sql_query = f"SELECT TOP 10 Nick, Wynik FROM Tabela_Wynikow WHERE Game_ID = ? AND Difficulty = ? ORDER BY Wynik DESC"
 	cursor=conn.cursor()
@@ -425,7 +425,7 @@ def load_frame4(poziom_trudnosci):
 			button_dalej.configure(command= lambda: sprawdz(tablica2,tablica,comboboxy))
 		else:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2) #tu trzeba bedzie odjąć czas który się odlicza
-			wynikKoncowy = punkty * 50 + round((60 - czasCwiczenia) * 50)
+			wynikKoncowy = round(punkty * 50 + round((60 - czasCwiczenia) * 50))
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			if wynikKoncowy < 0:
 				wynikKoncowy = 0 
@@ -556,7 +556,7 @@ def load_frame5(poziom_trudnosci):
 		else:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
 			global wynikKoncowy
-			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
+			wynikKoncowy = round(punkty * 50 + round((60 - czasCwiczenia) * 50))
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			if wynikKoncowy < 0:
 				wynikKoncowy = 0 
@@ -689,7 +689,7 @@ def load_frame6(poziom_trudnosci):
 		if liczba_rund==0:
 			czasCwiczenia = round(time.time() - czasCwiczenia, 2)
 			global wynikKoncowy
-			wynikKoncowy = punkty * 50 + (60 - czasCwiczenia) * 50
+			wynikKoncowy = round(punkty * 50 + round((60 - czasCwiczenia) * 50))
 			print(czasCwiczenia, punkty, wynikKoncowy)
 			if wynikKoncowy < 0:
 				wynikKoncowy = 0 
