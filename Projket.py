@@ -15,7 +15,8 @@ bg_colour = '#285A88' #główny kolor
 # połączenie z bazą danych 
 DRIVER_NAME='SQL SERVER'
 SERVER_NAME='DESKTOP-7H7M0GT\SQLEXPRESS'  # NALEZY ZMIENIĆ w przypadku nowego servera
-DARABASE_NAME='Pazig'
+# gdyby Pazig.bacpac zostałby zapisany inaczej to również tą nazwę należałoby zmienić
+DARABASE_NAME='Pazig' 
 # tu można dodac jeszcze USERNAME oraz PASSWORD
 connection_string=f"""
 	DRIVER={{{DRIVER_NAME}}};
