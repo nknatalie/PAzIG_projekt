@@ -1,0 +1,6 @@
+Celem zadania jest zapamiętanie oraz odtworzenie kolejności obrazków. 
+Po rozpoczęciu rundy wyświetlone zostanie kilka obrazków, których liczba zależy od wybranego poziomu trudności. 
+Masz 5 sekund na zapamiętanie kolejności. Po tym czasie nastąpi przetasowanie obrazków. Należy wybrać z list takie liczby, które odpowiadają kolejności wyświetlonych obrazków (przed przetasowaniem). 
+Upewnij się że nie wybrałeś  dwa razy tego samego numeru. Na wynik wpłynie liczba poprawnych odpowiedzi oraz czas wykonania ćwiczenia.
+
+Powodzenia!

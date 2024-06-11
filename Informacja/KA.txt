@@ -1,0 +1,3 @@
+Celem zadania jest ułożenie podanych słów w kolejności alfabetycznej. Wybór poziomu trudności wpłynie na liczbę rund oraz słów w jednej rundzie.  W każdej rundzie wybierz z listy rozwijanej słowa w taki sposób, aby były ułożone w kolejności alfabetycznej. Każde słowo można wykorzystać tylko raz!  Na Twój wynik wpłynie liczba poprawnych odpowiedzi oraz czas rozwiązania zadania.
+
+Powodzenia!
